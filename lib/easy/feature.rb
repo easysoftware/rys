@@ -22,34 +22,36 @@ module Easy
       }
     end
 
-    def self.active?(value)
-      case value
-      when Symbol, String
-        feature = all_features[value.to_s]
-        feature ? feature.active? : true
-      when Proc
-        value.call
-      else
-        true
+    def self.active?(*values)
+      values.each do |value|
+        result = case value
+                 when Symbol, String
+                   feature = all_features[value.to_s]
+                   feature ? feature.active? : true
+                 when Proc
+                   value.call
+                 else
+                   true
+                 end
+
+        if !result
+          return false
+        end
       end
+
+      true
     end
 
-    def self.on(key, &block)
-      if active?(key)
+    def self.on(*keys, &block)
+      if active?(*keys)
         yield
       end
-    end
-
-    def self.migrate_new
-      return unless Easy::FeatureRecord.table_exists?
-
-      binding.pry unless $__binding
     end
 
     def initialize(key, parent, &condition)
       @key = key
       @parent = parent
-      @condition = condition || lambda { true }
+      @condition = condition
 
       @full_key = parent.root? ? key : "#{parent.full_key}.#{key}"
       @children = {}
@@ -84,7 +86,11 @@ module Easy
     end
 
     def active?
-      condition.call && parent.active?
+      (record && record.active?) && parent.active?
+    end
+
+    def record
+      EasyFeatureRecord.find_by(name: full_key)
     end
 
   end

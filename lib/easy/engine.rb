@@ -35,9 +35,7 @@ module Easy
       end
 
       app.middleware.use Easy::FeaturePreload
-      Easy::Feature.migrate_new
-
-
+      EasyFeatureRecord.migrate_new
     end
 
   end

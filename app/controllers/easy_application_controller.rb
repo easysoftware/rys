@@ -1,0 +1,2 @@
+class EasyApplicationController < ApplicationController
+end
