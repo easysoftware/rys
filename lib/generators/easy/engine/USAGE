@@ -1,0 +1,8 @@
+Description:
+    Generate new Easy engine
+
+Example:
+    rails generate easy:engine Thing
+
+    This will create:
+        what/will/it/create
