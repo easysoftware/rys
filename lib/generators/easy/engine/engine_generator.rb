@@ -34,10 +34,6 @@ module Easy
       PluginBuilder
     end
 
-    # def create_bin_files
-    #   nil
-    # end
-
     def create_patches_example
       directory 'patches'
     end
