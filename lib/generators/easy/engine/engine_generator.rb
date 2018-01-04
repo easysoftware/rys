@@ -34,9 +34,9 @@ module Easy
       PluginBuilder
     end
 
-    def create_bin_files
-      nil
-    end
+    # def create_bin_files
+    #   nil
+    # end
 
     def create_patches_example
       directory 'patches'
@@ -49,6 +49,9 @@ module Easy
       # build(:license)
       build(:gitignore) unless options[:skip_git]
       build(:gemfile)   unless options[:skip_gemfile]
+
+      build(:bin, true)
+      directory 'db'
     end
 
     def create_test_files

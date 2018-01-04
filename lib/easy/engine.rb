@@ -1,3 +1,4 @@
+require 'rails/all'
 module Easy
   class Engine < ::Rails::Engine
 

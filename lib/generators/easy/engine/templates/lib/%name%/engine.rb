@@ -1,3 +1,4 @@
+require 'easy_core'
 module <%= camelized %>
   class Engine < ::Rails::Engine
     extend Easy::PluginEngine
