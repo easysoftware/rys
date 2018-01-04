@@ -2,6 +2,7 @@ module Easy
   class Engine < ::Rails::Engine
 
     config.generators do |g|
+      g.test_framework :rspec, fixture: false
       g.assets false
       g.helper false
     end
@@ -28,7 +29,7 @@ module Easy
       # To avoid
       #   easy:install:migrations
       #
-      if !app.root.to_s.match(root.to_s)
+      if app.root.to_s != root.to_s
         config.paths['db/migrate'].expanded.each do |expanded_path|
           app.config.paths['db/migrate'] << expanded_path
         end

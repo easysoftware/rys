@@ -4,14 +4,10 @@ require 'rails/generators/rails/plugin/plugin_generator'
 module Easy
   class PluginBuilder < ::Rails::PluginBuilder
 
-    def gemfile_entry
-      return unless inside_application?
-
-      gemfile_in_app_path = File.join(rails_app_path, 'Gemfile.local')
-      if File.exist?(gemfile_in_app_path)
-        entry = "gem '#{name}', path: '#{relative_path}'"
-        append_file gemfile_in_app_path, entry
-      end
+    def lib
+      super
+      template "lib/%name%/features.rb"
+      template "lib/%name%/hooks.rb"
     end
 
   end
@@ -23,6 +19,10 @@ module Easy
     self.source_paths << Rails::Generators::PluginGenerator.source_root
 
     def mountable?
+      false
+    end
+
+    def full?
       true
     end
 
@@ -34,8 +34,29 @@ module Easy
       PluginBuilder
     end
 
-    def create_extensions_example
-      template "extensions/%namespaced_name%/issue.rb"
+    def create_bin_files
+      nil
+    end
+
+    def create_patches_example
+      directory 'patches'
+    end
+
+    def create_root_files
+      # build(:readme)
+      build(:rakefile)
+      build(:gemspec)   unless options[:skip_gemspec]
+      # build(:license)
+      build(:gitignore) unless options[:skip_git]
+      build(:gemfile)   unless options[:skip_gemfile]
+    end
+
+    def create_test_files
+      directory 'spec'
+    end
+
+    def create_view_example
+      template 'app/views/issues/_view_issues_show_details_bottom.html.erb'
     end
 
   end

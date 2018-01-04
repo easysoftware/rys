@@ -2,7 +2,7 @@ Description:
     Generate new Easy engine
 
 Example:
-    rails generate easy:engine Thing
+    rails generate easy:engine modification_something
 
     This will create:
-        what/will/it/create
+        modification_something

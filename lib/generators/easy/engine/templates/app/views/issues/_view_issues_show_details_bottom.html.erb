@@ -1,0 +1,16 @@
+<% Easy::Feature.on('issue.show.timeentries_details') do %>
+  <hr>
+  <div>
+    <strong>Timeentries count:</strong> <%= @timeentries_details %>
+  </div>
+  <hr>
+<% end %>
+
+
+<% Easy::Feature.on('issue.show.project_details') do %>
+  <hr>
+  <div>
+    <strong>Project name:</strong> <%= @project_details %>
+  </div>
+  <hr>
+<% end %>
