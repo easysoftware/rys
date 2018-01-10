@@ -1,5 +1,6 @@
 class RysFeaturesController < ApplicationController
 
+  before_action :require_admin
   before_action :find_feature, only: [:update]
 
   def index

@@ -29,7 +29,7 @@ module Rys
         path = env['PATH_INFO'].to_s
         features = Array(@features_for_paths[path])
 
-        features = RysFeatureRecord.where(name: features)
+        features = ::RysFeatureRecord.where(name: features)
         features.each do |feature|
           Rys::Feature.session_features[feature.name] = feature
         end

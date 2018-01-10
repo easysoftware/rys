@@ -29,16 +29,14 @@ module Rys
     end
 
     initializer 'rys.features' do |app|
-      # To avoid
-      #   easy:install:migrations
-      #
+      # Tu run just `db:migrate`
       if app.root.to_s != root.to_s
         config.paths['db/migrate'].expanded.each do |expanded_path|
           app.config.paths['db/migrate'] << expanded_path
         end
       end
 
-      app.middleware.use Rys::FeaturePreload
+      app.middleware.use 'Rys::FeaturePreload'
       RysFeatureRecord.migrate_new
     end
 
