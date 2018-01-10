@@ -7,12 +7,31 @@ module Rys
     mattr_accessor :patches
     self.patches = []
 
+    mattr_accessor :currently_modified_klasses
+    self.currently_modified_klasses = []
+
     def self.add(klass_to_patch, &block)
       patches << [klass_to_patch, block]
       self
     end
 
     def self.reload_patches
+      currently_modified_klasses.each do |klass|
+        begin
+          # Constants which are not defined in Rails are not
+          # removed. So ancestors remains. Solutions is keep
+          # them but remove their content.
+          klass_to_patch = klass.constantize
+          klass_to_patch.ancestors.each do |ancestor|
+            if ancestor.is_a?(Rys::PatchModule)
+              ancestor.remove_patch_methods
+            end
+          end
+        rescue NameError
+        end
+      end
+      currently_modified_klasses.clear
+
       patches.clear
       paths.each do |path|
         pattern = File.join(path, '**', '*.rb')
@@ -22,20 +41,12 @@ module Rys
 
     def self.apply
       patches.each do |klass_to_patch, block|
+        currently_modified_klasses << klass_to_patch
         klass_to_patch = klass_to_patch.constantize
 
         dsl = Rys::PatcherDSL.new
         dsl.instance_eval(&block)
         result = dsl._result
-
-        # Constants which are not defined in Rails are not
-        # removed. So ancestors remains. Solutions is keep
-        # them but remove their content.
-        klass_to_patch.ancestors.each do |ancestor|
-          if ancestor.is_a?(Rys::PatchModule)
-            ancestor.remove_patch_methods
-          end
-        end
 
         result[:included].each do |included|
           klass_to_patch.class_eval(&included)
