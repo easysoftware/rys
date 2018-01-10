@@ -5,15 +5,15 @@
     <th></th>
   </tr>
 
-  <% EasyFeatureRecord.enabled.each do |feature| %>
+  <% RysFeatureRecord.enabled.each do |feature| %>
     <tr>
       <td style="color: <%= feature.active? ? 'green' : 'red' %>"><%= feature.name %></td>
       <td><%= checked_image(feature.active) %></td>
       <td>
         <% if feature.active? %>
-          <%= link_to 'deactivate', update_easy_feature_path(feature, active: '0'), method: 'POST' %>
+          <%= link_to 'deactivate', update_rys_feature_path(feature, active: '0'), method: 'POST' %>
         <% else %>
-          <%= link_to 'activate', update_easy_feature_path(feature, active: '1'), method: 'POST' %>
+          <%= link_to 'activate', update_rys_feature_path(feature, active: '1'), method: 'POST' %>
         <% end %>
       </td>
       <td></td>

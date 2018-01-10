@@ -1,6 +1,6 @@
 require 'monitor'
 
-module Easy
+module Rys
   class Feature
     extend MonitorMixin
 
@@ -11,7 +11,7 @@ module Easy
     attr_accessor :condition
 
     def self.root
-      Easy::RootFeature.instance
+      Rys::RootFeature.instance
     end
 
     def self.add(key, &condition)
@@ -48,6 +48,14 @@ module Easy
       end
     end
 
+    def self.session_features
+      if !RequestStore.store.has_key?(:rys_session_features)
+        RequestStore.store[:rys_session_features] = {}
+      end
+
+      RequestStore.store[:rys_session_features]
+    end
+
     def initialize(key, parent, &condition)
       @key = key
       @parent = parent
@@ -76,7 +84,7 @@ module Easy
       key = keys.shift.to_s
 
       if !children.has_key?(key)
-        new_feature = Easy::Feature.new(key, self)
+        new_feature = Rys::Feature.new(key, self)
 
         children[key] = new_feature
         all_features[new_feature.full_key] = new_feature
@@ -90,13 +98,13 @@ module Easy
     end
 
     def record
-      EasyFeatureRecord.find_by(name: full_key)
+      Rys::Feature.session_features[full_key] ||= RysFeatureRecord.find_by(name: full_key)
     end
 
   end
 end
 
-module Easy
+module Rys
   class RootFeature < Feature
     include Singleton
 

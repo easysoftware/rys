@@ -1,4 +1,4 @@
-class EasyFeaturesController < EasyApplicationController
+class RysFeaturesController < ApplicationController
 
   before_action :find_feature, only: [:update]
 
@@ -9,13 +9,13 @@ class EasyFeaturesController < EasyApplicationController
     @feature.active = params[:active]
     @feature.save
 
-    redirect_to easy_features_path
+    redirect_to rys_features_path
   end
 
   private
 
     def find_feature
-      @feature = EasyFeatureRecord.find_by(id: params[:id])
+      @feature = RysFeatureRecord.find_by(id: params[:id])
       return render_404 if @feature.nil?
     end
 

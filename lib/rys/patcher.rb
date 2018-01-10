@@ -1,4 +1,4 @@
-module Easy
+module Rys
   class Patcher
 
     mattr_accessor :paths
@@ -24,7 +24,7 @@ module Easy
       patches.each do |klass_to_patch, block|
         klass_to_patch = klass_to_patch.constantize
 
-        dsl = Easy::PatcherDSL.new
+        dsl = Rys::PatcherDSL.new
         dsl.instance_eval(&block)
         result = dsl._result
 
@@ -32,7 +32,7 @@ module Easy
         # removed. So ancestors remains. Solutions is keep
         # them but remove their content.
         klass_to_patch.ancestors.each do |ancestor|
-          if ancestor.is_a?(Easy::PatchModule)
+          if ancestor.is_a?(Rys::PatchModule)
             ancestor.remove_patch_methods
           end
         end
@@ -42,7 +42,7 @@ module Easy
         end
 
         result[:instance_methods].each do |options, block|
-          mod = Easy::PatchModule.new(&block)
+          mod = Rys::PatchModule.new(&block)
 
           if options[:feature]
             # Save original methods
@@ -55,10 +55,10 @@ module Easy
           klass_to_patch.prepend(mod)
 
           if options[:feature]
-            mod = Easy::PatchModule.new do
+            mod = Rys::PatchModule.new do
               method_list.each do |m, aliased_m|
                 define_method(m) do |*args, &block|
-                  if ::Easy::Feature.active?(options[:feature])
+                  if ::Rys::Feature.active?(options[:feature])
                     super(*args, &block)
                   else
                     # method(__method__).super_method.super_method.call(*args, &block)
@@ -79,7 +79,7 @@ module Easy
   end
 end
 
-module Easy
+module Rys
   class PatcherDSL
 
     def initialize
@@ -111,7 +111,7 @@ module Easy
   end
 end
 
-module Easy
+module Rys
   class PatchModule < Module
 
     def remove_patch_methods

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get 'easy_features', to: 'easy_features#index', as: 'easy_features'
-  post 'easy_features/:id/update', to: 'easy_features#update', as: 'update_easy_feature'
+  get 'rys_features', to: 'rys_features#index', as: 'rys_features'
+  post 'rys_features/:id/update', to: 'rys_features#update', as: 'update_rys_feature'
 
 end

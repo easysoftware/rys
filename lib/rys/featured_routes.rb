@@ -1,4 +1,4 @@
-module Easy
+module Rys
   module FeaturedRoutes
     module Mapper
 
@@ -10,14 +10,14 @@ module Easy
         end
 
         if easy_feature
-          options[:constraints] = lambda {|_| Easy::Feature.active?(easy_feature) }
+          options[:constraints] = lambda {|_| Rys::Feature.active?(easy_feature) }
         end
 
         super
       end
 
       def easy_feature(feature)
-        constraints = lambda {|_| Easy::Feature.active?(feature) }
+        constraints = lambda {|_| Rys::Feature.active?(feature) }
         scope(constraints: constraints) { yield }
       end
 
@@ -25,4 +25,4 @@ module Easy
   end
 end
 
-ActionDispatch::Routing::Mapper.prepend(Easy::FeaturedRoutes::Mapper)
+ActionDispatch::Routing::Mapper.prepend(Rys::FeaturedRoutes::Mapper)

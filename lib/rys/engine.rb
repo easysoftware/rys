@@ -1,5 +1,7 @@
-require 'rails/all'
-module Easy
+# Are you sure?
+# require 'rails/all'
+
+module Rys
   class Engine < ::Rails::Engine
 
     config.generators do |g|
@@ -8,25 +10,25 @@ module Easy
       g.helper false
     end
 
-    initializer 'easy.patches' do |app|
+    initializer 'rys.patches' do |app|
       dirs = {}
-      Easy::Patcher.paths.each do |path|
+      Rys::Patcher.paths.each do |path|
         dirs[path.to_s] = ['rb']
       end
 
       patches_reloader = ActiveSupport::FileUpdateChecker.new([], dirs) do
-        Easy::Patcher.reload_patches
+        Rys::Patcher.reload_patches
       end
       patches_reloader.execute
       app.reloaders << patches_reloader
 
       config.to_prepare do
         patches_reloader.execute_if_updated
-        Easy::Patcher.apply
+        Rys::Patcher.apply
       end
     end
 
-    initializer 'easy.features' do |app|
+    initializer 'rys.features' do |app|
       # To avoid
       #   easy:install:migrations
       #
@@ -36,8 +38,8 @@ module Easy
         end
       end
 
-      app.middleware.use Easy::FeaturePreload
-      EasyFeatureRecord.migrate_new
+      app.middleware.use Rys::FeaturePreload
+      RysFeatureRecord.migrate_new
     end
 
   end

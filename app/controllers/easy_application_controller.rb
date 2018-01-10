@@ -1,2 +1,0 @@
-class EasyApplicationController < ApplicationController
-end
