@@ -143,10 +143,20 @@ Rys::Patcher.add('IssuesController') do
 end
 ```
 
-## Engine generator
+## Plugins
+
+
 
 ```
-rails g rys:engine NAME
+rails generate rys:engine RYS_PLUGIN
 ```
 
 That will generate plugin into `rys_plugins` and add record into your `Gemfile.local`.
+
+### Generators
+
+You can use almost the same commands as in Rails.
+
+```
+rails generate rys:model RYS_PLUGIN NAME ...normal arguments...
+```
