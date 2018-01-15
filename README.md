@@ -97,6 +97,12 @@ Now you can define patch
 ```ruby
 Rys::Patcher.add(CLASS_TO_PATCH) do
 
+  apply_only_once!
+
+  apply_if do
+    CONDITION
+  end
+
   included do
     # This section is evaluated in CLASS_TO_PATCH
   end
