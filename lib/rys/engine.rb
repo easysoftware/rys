@@ -10,6 +10,10 @@ module Rys
       g.helper false
     end
 
+    generators do
+      require 'rys/rails_generator'
+    end
+
     initializer 'rys.patches' do |app|
       dirs = {}
       Rys::Patcher.paths.each do |path|
