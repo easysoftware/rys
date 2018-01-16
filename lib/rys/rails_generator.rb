@@ -45,3 +45,27 @@ module Rys
     end
   end
 end
+
+module Rys
+  module RailsGenerator
+    class Controller < ::Rails::Generators::NamedBase
+
+      def self.help(shell)
+        shell.say "Usage for Rys:"
+        shell.say "  rails generate rys:controller RYS_PLUGIN NAME ...same as below..."
+        shell.say
+        Rails::Generators.find_by_namespace('controller').help(shell)
+      end
+
+      def self.namespace
+        "rys:controller"
+      end
+
+      def invoke_origin
+        plugin = ARGV.shift
+        Rails::Generators.invoke 'controller', ARGV, behavior: :invoke, destination_root: "rys_plugins/#{plugin}"
+      end
+
+    end
+  end
+end
