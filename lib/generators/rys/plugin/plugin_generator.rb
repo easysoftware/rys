@@ -16,7 +16,7 @@ module Rys
 
   end
 
-  class EngineGenerator < ::Rails::Generators::PluginGenerator
+  class PluginGenerator < ::Rails::Generators::PluginGenerator
     source_root File.expand_path('templates', __dir__)
 
     self.source_paths << source_root
