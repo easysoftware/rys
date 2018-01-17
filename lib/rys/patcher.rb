@@ -78,6 +78,12 @@ module Rys
       self.applied_count += 1
     end
 
+    # TODO: What should happen if
+    #   instance_methods(feature: ...) do
+    #     def uniq_method_which_does_not_exist_yet
+    #     end
+    #   end
+    #
     def self.perpend_methods(klass_to_patch, options, block)
       mod = Rys::PatchModule.new(&block)
 

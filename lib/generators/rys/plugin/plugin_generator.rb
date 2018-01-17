@@ -5,7 +5,7 @@ module Rys
   class PluginBuilder < ::Rails::PluginBuilder
 
     def readme
-      template "README.md"
+      template 'README.md'
     end
 
     def lib
@@ -19,14 +19,28 @@ module Rys
   class PluginGenerator < ::Rails::Generators::PluginGenerator
     source_root File.expand_path('templates', __dir__)
 
+    class_option :path, type: :string
+
     self.source_paths << source_root
     self.source_paths << Rails::Generators::PluginGenerator.source_root
 
     def initialize(*args)
       super
 
-      self.destination_root = Rails.root.join('rys_plugins').to_s
-      FileUtils.mkdir_p(destination_root)
+      if options[:path].present?
+        path = options[:path]
+      elsif ENV.has_key?('RYS_PLUGINS_PATH')
+        path = ENV['RYS_PLUGINS_PATH']
+      else
+        path = Rails.root.join('rys_plugins').to_s
+        FileUtils.mkdir_p(path)
+      end
+
+      if !Dir.exist?(path)
+        raise NameError, "Path '#{path}' does not exist."
+      end
+
+      self.destination_root = path
     end
 
     def mountable?
@@ -77,8 +91,8 @@ module Rys
         create_file gemfile_local
       end
 
-      entry = "gem '#{name}', path: 'rys_plugins/#{camelized}'"
-      # append_file gemfile_local, entry
+      entry = "gem '#{name}', path: '#{destination_root}'"
+      append_file gemfile_local, entry
     end
 
     def init_git
@@ -86,6 +100,11 @@ module Rys
 
       git :init
       git add: '.'
+    end
+
+    def informations
+      shell.say
+      shell.say_status 'created in', destination_root
     end
 
   end

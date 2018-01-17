@@ -1,8 +1,8 @@
 Description:
-    Generate new Easy engine
+    Generate new Rys plugin
 
 Example:
-    rails generate rys:engine modification_something
+    rails generate rys:plugin modification_something
 
     This will create:
         modification_something
