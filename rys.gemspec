@@ -11,8 +11,10 @@ Gem::Specification.new do |s|
   s.summary  = 'Feature toggler, patch manager, plugin generator'
   s.license  = 'GNU/GPL 2'
 
-  s.files = `git ls-files -z`.split("\x0")
-  s.test_files = s.files.grep(%r{^(test|spec|features)/})
+  s.files = Dir['{app,config,db,lib,spec}/**/*', 'Rakefile', 'README.md']
+
+  # s.files = `git ls-files -z`.split("\x0")
+  # s.test_files = s.files.grep(%r{^(test|spec|features)/})
 
   s.add_dependency 'request_store'
   s.add_development_dependency 'pry'

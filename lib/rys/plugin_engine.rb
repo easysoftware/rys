@@ -16,5 +16,28 @@ module Rys
       end
     end
 
+    # Experimental function
+    #
+    def lib_dependency_files(&block)
+      files = Array(block.call)
+      abosulte_files = files.map do |file|
+        root.join('lib', "#{file}.rb")
+      end
+
+      initializer "#{engine_name}.dependency_files" do |app|
+        reloader = ActiveSupport::FileUpdateChecker.new(abosulte_files) do
+          files.each do |file|
+            require_dependency file
+          end
+        end
+
+        app.reloaders << reloader
+
+        config.to_prepare do
+          reloader.execute
+        end
+      end
+    end
+
   end
 end

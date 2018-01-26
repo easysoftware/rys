@@ -42,6 +42,7 @@ module Rys
       true
     end
 
+    # TODO: Measure time
     def self.on(*keys, &block)
       if active?(*keys)
         yield
