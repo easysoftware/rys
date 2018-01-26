@@ -5,9 +5,9 @@
     <th></th>
   </tr>
 
-  <% RysFeatureRecord.enabled.each do |feature| %>
+  <% RysFeatureRecord.enabled.sort_by{|r| r.name.split('.') }.each do |feature| %>
     <tr>
-      <td style="color: <%= feature.active? ? 'green' : 'red' %>"><%= feature.name %></td>
+      <td class="subject" style="color: <%= feature.active? ? 'green' : 'red' %>"><%= feature.name %></td>
       <td><%= checked_image(feature.active) %></td>
       <td>
         <% if feature.active? %>
