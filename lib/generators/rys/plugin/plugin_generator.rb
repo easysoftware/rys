@@ -14,6 +14,11 @@ module Rys
       template 'lib/%name%/hooks.rb'
     end
 
+    def config
+      super
+      template 'config/locales/en.yml.tt'
+    end
+
   end
 
   class PluginGenerator < ::Rails::Generators::PluginGenerator
