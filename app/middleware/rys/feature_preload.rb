@@ -27,7 +27,10 @@ module Rys
 
       def load_features(env)
         path = env['PATH_INFO'].to_s
+        return if path.start_with?('/assets')
+
         features = Array(@features_for_paths[path])
+        return if features.empty?
 
         features = ::RysFeatureRecord.where(name: features)
         features.each do |feature|
