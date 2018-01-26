@@ -1,2 +1,3 @@
 en:
-  <%= name %>_plugin: "<%= camelized %>"
+  <%= name %>:
+    plugin_name: "<%= camelized %>"
