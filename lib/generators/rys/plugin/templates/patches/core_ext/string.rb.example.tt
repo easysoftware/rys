@@ -1,7 +1,13 @@
 Rys::Patcher.add('String') do
 
+  apply_only_once!
+
+  apply_if do
+    !String.new.respond_to?(:to_boolean)
+  end
+
   instance_methods do
-    def <%= name %>_to_boolean
+    def to_boolean
       case self
       when 'yes', 'y', 'true', 't', '1'
         true

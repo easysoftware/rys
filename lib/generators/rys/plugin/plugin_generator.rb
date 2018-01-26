@@ -34,11 +34,14 @@ module Rys
 
       if options[:path].present?
         path = options[:path]
+        @destination_root_by = :path
       elsif ENV.has_key?('RYS_PLUGINS_PATH')
         path = ENV['RYS_PLUGINS_PATH']
+        @destination_root_by = :env
       else
         path = Rails.root.join('rys_plugins').to_s
         FileUtils.mkdir_p(path)
+        @destination_root_by = :in_root
       end
 
       if !Dir.exist?(path)
@@ -96,7 +99,16 @@ module Rys
         create_file gemfile_local
       end
 
-      entry = "gem '#{name}', path: '#{destination_root}'"
+      case @destination_root_by
+      when :path
+        path = "'#{destination_root}'"
+      when :env
+        path = "ENV['RYS_PLUGINS_PATH'] + '/#{app_path}'"
+      when :in_root
+        path = "'rys_plugins/#{app_path}'"
+      end
+
+      entry = "\ngem '#{name}', path: #{path}\n"
       append_file gemfile_local, entry
     end
 
