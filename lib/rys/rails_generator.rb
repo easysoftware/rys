@@ -1,71 +1,50 @@
 module Rys
   module RailsGenerator
-    class Model < ::Rails::Generators::NamedBase
+    class Base < ::Rails::Generators::NamedBase
+
+      def self.namespace
+        "rys:#{origin_name}"
+      end
 
       def self.help(shell)
         shell.say "Usage for Rys:"
-        shell.say "  rails generate rys:model RYS_PLUGIN NAME ...same as below..."
+        shell.say "  rails generate rys:#{origin_name} RYS_PLUGIN NAME ...same as below..."
         shell.say
-        Rails::Generators.find_by_namespace('model').help(shell)
-      end
-
-      def self.namespace
-        "rys:model"
+        Rails::Generators.find_by_namespace(origin_name).help(shell)
       end
 
       def invoke_origin
-        plugin = ARGV.shift
-        Rails::Generators.invoke 'model', ARGV, behavior: :invoke, destination_root: "rys_plugins/#{plugin}"
+        name = ARGV.shift.to_s.camelize
+        plugin = "#{name}::Engine".constantize
+
+        Rails::Generators.invoke self.class.origin_name, ARGV, behavior: :invoke, destination_root: plugin.root
       end
 
     end
-  end
-end
 
-module Rys
-  module RailsGenerator
-    class Scaffold < ::Rails::Generators::NamedBase
+    class Model < Base
 
-      def self.help(shell)
-        shell.say "Usage for Rys:"
-        shell.say "  rails generate rys:scaffold RYS_PLUGIN NAME ...same as below..."
-        shell.say
-        Rails::Generators.find_by_namespace('scaffold').help(shell)
-      end
-
-      def self.namespace
-        "rys:scaffold"
-      end
-
-      def invoke_origin
-        plugin = ARGV.shift
-        Rails::Generators.invoke 'scaffold', ARGV, behavior: :invoke, destination_root: "rys_plugins/#{plugin}"
+      def self.origin_name
+        'model'
       end
 
     end
-  end
-end
 
-module Rys
-  module RailsGenerator
-    class Controller < ::Rails::Generators::NamedBase
+    class Scaffold < Base
 
-      def self.help(shell)
-        shell.say "Usage for Rys:"
-        shell.say "  rails generate rys:controller RYS_PLUGIN NAME ...same as below..."
-        shell.say
-        Rails::Generators.find_by_namespace('controller').help(shell)
-      end
-
-      def self.namespace
-        "rys:controller"
-      end
-
-      def invoke_origin
-        plugin = ARGV.shift
-        Rails::Generators.invoke 'controller', ARGV, behavior: :invoke, destination_root: "rys_plugins/#{plugin}"
+      def self.origin_name
+        'scaffold'
       end
 
     end
+
+    class Controller < Base
+
+      def self.origin_name
+        'controller'
+      end
+
+    end
+
   end
 end
