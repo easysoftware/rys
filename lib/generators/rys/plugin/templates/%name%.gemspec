@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ['<%= author %>']
   s.email       = ['<%= email %>']
   s.homepage    = 'https://easysoftware.com'
-  s.summary     = 'TODO: Summary of <%= camelized %>.'
-  s.description = 'TODO: Description of <%= camelized %>.'
+  s.summary     = 'Summary of <%= camelized %>.'
+  s.description = 'Description of <%= camelized %>.'
   s.license     = 'GNU/GPL 2'
 
   s.files = Dir['{app,config,db,lib,spec}/**/*', 'Rakefile', 'README.md']

@@ -1,6 +1,3 @@
-# Are you sure?
-# require 'rails/all'
-
 module Rys
   class Engine < ::Rails::Engine
 
@@ -42,6 +39,11 @@ module Rys
 
       app.middleware.use 'Rys::FeaturePreload'
       RysFeatureRecord.migrate_new
+    end
+
+    initializer 'rys.plugins' do
+      # This initializer is run after Redmine and Easy plugins
+      Rys::PluginsManagement.load_all
     end
 
   end
