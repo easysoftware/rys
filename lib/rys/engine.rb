@@ -41,10 +41,5 @@ module Rys
       RysFeatureRecord.migrate_new
     end
 
-    initializer 'rys.plugins' do
-      # This initializer is run after Redmine and Easy plugins
-      Rys::PluginsManagement.load_all
-    end
-
   end
 end

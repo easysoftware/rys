@@ -86,7 +86,7 @@ First you need to register path to directory
 
 ```ruby
 # extend your engine
-extend ::Rys::PluginEngine
+extend ::Rys::EngineExtensions
 
 # or manually
 Rys::Patcher.paths << PATH_TO_DIRECTORY
