@@ -2,9 +2,16 @@
 
 Name is a big mistery. Do not bother to figure it out :-).
 
-Library contains feature togglers, patcher manager and engine generator.
+Library is similar to Railties but in Redmine environment. Contains:
 
-All you need to do is insert `gem 'rys'` into your Gemfile.
+- feature toggler
+- patcher manager
+- plugin generator
+- interface to Redmine
+
+All you need to do is insert `gem 'rys'` into your Gemfile. If you want develop this gem or its plugis locally you can set bundler:
+
+`bundle config local.GEM_NAME GEM_PATH`
 
 ## Features
 
@@ -16,7 +23,7 @@ You can toggle some code base on database state.
 Rys::Feature.add('issue.show')
 ```
 
-All features have tree structure so if parent disabled all children are disabled too. For example
+All features have tree structure so if parent disabled all children are disabled too. For example:
 
 ```ruby
 Rys::Feature.add('issue.show')
@@ -29,7 +36,7 @@ Rys::Feature.add('issue.show.sidebar')
 
 If `issue` is disabled -> all `issue.*` are disabled too regardless to theirs state.
 
-You can check feature in many ways.
+You can check feature state via:
 
 ```ruby
 Rys::Feature.on('issue.show') do
@@ -41,7 +48,7 @@ if Rys::Feature.active?('issue.show')
 end
 ```
 
-In routes definition
+### In routes
 
 ```ruby
 get 'path', rys_feature: 'issue.show'
@@ -51,25 +58,24 @@ rys_feature 'issue.show' do
 end
 ```
 
-In patches (more details in Patch manager section)
+### In patches
+
+More details can be found at Patch manager section.
 
 ```ruby
-# ...
-
 instance_methods(feature: 'issue.show') do
   def show
-  # Something todo
+    # Something todo
     # if feature is active
     super
   end
 end
-
-# ...
 ```
 
 
-#### Idea for future
+### Custom condition
 
+If don't want to use DB record checking you can also define custom conditions.
 
 ```ruby
 # Ruby block state
@@ -86,7 +92,7 @@ First you need to register path to directory
 
 ```ruby
 # extend your engine
-extend ::Rys::EngineExtensions
+include ::Rys::EngineExtensions
 
 # or manually
 Rys::Patcher.paths << PATH_TO_DIRECTORY
@@ -145,18 +151,21 @@ end
 
 ## Plugins
 
-
+Target directory can be set via `--path` options or via environment varible `RYS_PLUGINS_PATH`.
 
 ```
-rails generate rys:engine RYS_PLUGIN
+rails generate rys:plugin --help
+rails generate rys:plugin RYS_PLUGIN
 ```
 
 That will generate plugin into `rys_plugins` and add record into your `Gemfile.local`.
 
 ### Generators
 
-You can use almost the same commands as in Rails.
+You can use the same generator like in any Rails plugin. Just add prefix `rys` and specify Rys plugin name.
 
 ```
 rails generate rys:model RYS_PLUGIN NAME ...normal arguments...
+rails generate rys:scaffold RYS_PLUGIN NAME ...normal arguments...
+rails generate rys:controller RYS_PLUGIN NAME ...normal arguments...
 ```
