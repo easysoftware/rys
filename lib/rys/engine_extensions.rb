@@ -66,17 +66,18 @@ module Rys
           root.join('lib', "#{file}.rb")
         end
 
-        initializer "#{engine_name}.dependency_files" do |app|
+        initializer "#{engine_name}.dependency_files", before: :engines_blank_point do |app|
           reloader = ActiveSupport::FileUpdateChecker.new(abosulte_files) do
             files.each do |file|
               require_dependency file
             end
           end
 
+          reloader.execute
           app.reloaders << reloader
 
           config.to_prepare do
-            reloader.execute
+            reloader.execute_if_updated
           end
         end
       end
