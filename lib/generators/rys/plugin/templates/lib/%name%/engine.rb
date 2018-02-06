@@ -1,6 +1,6 @@
 module <%= camelized %>
   class Engine < ::Rails::Engine
-    extend Rys::EngineExtensions
+    include Rys::EngineExtensions
 
     initializer '<%= name %>.setup' do
       require '<%= name %>/hooks'
