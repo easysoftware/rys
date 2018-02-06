@@ -7,6 +7,8 @@ class CreateRysFeatures < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+
+    add_index :rys_features, :name, unique: true, name: 'unique_index_rys_features_name'
   end
 
 end

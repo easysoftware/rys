@@ -14,4 +14,17 @@ class RysFeatureRecord < ActiveRecord::Base
     end
   end
 
+  def self.request_store
+    if !RequestStore.store.has_key?(:rys_features_request_store)
+      RequestStore.store[:rys_features_request_store] = {}
+    end
+
+    RequestStore.store[:rys_features_request_store]
+  end
+
+  def self.active?(full_key)
+    record = (request_store[full_key] ||= find_by(name: full_key))
+    record && record.active?
+  end
+
 end

@@ -75,12 +75,20 @@ end
 
 ### Custom condition
 
-If don't want to use DB record checking you can also define custom conditions.
+If you don't want to use DB record checking you can also define custom conditions.
 
 ```ruby
 # Ruby block state
 Rys::Feature.add('issue.show') do
   rand(0..10) == 1
+end
+```
+
+Or you can use both way like
+
+```ruby
+Rys::Feature.add('issue.show') do
+  rand(0..10) == 1 && RysFeatureRecord.active?('issue.show')
 end
 ```
 

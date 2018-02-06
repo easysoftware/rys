@@ -49,14 +49,6 @@ module Rys
       end
     end
 
-    def self.session_features
-      if !RequestStore.store.has_key?(:rys_session_features)
-        RequestStore.store[:rys_session_features] = {}
-      end
-
-      RequestStore.store[:rys_session_features]
-    end
-
     def initialize(key, parent, &block_condition)
       @key = key
       @parent = parent
@@ -97,15 +89,9 @@ module Rys
     def active?
       if block_condition
         block_condition.call && parent.active?
-      elsif record
-        record.active? && parent.active?
       else
-        false
+        RysFeatureRecord.active?(full_key) && parent.active?
       end
-    end
-
-    def record
-      Rys::Feature.session_features[full_key] ||= RysFeatureRecord.find_by(name: full_key)
     end
 
   end
