@@ -95,6 +95,8 @@ module Rys
       #
       #   move_initializer(:add_view_paths, after: :load_config_initializers)
       #
+      # More informations: http://guides.rubyonrails.org/configuring.html#initialization-events
+      #
       def move_initializer(name, before: nil, after: nil)
         initializers_moves << { name: name, before: before, after: after }
       end

@@ -7,17 +7,17 @@ module Rys
     mattr_accessor :all_features
     self.all_features = {}
 
-    attr_reader :key, :full_key, :parent, :children, :condition
-    attr_accessor :condition
+    attr_reader :key, :full_key, :parent, :children
+    attr_accessor :block_condition
 
     def self.root
       Rys::RootFeature.instance
     end
 
-    def self.add(key, &condition)
+    def self.add(key, &block_condition)
       synchronize {
         feature = root.fetch_or_create(key)
-        feature.condition = condition
+        feature.block_condition = block_condition
         feature
       }
     end
@@ -57,10 +57,10 @@ module Rys
       RequestStore.store[:rys_session_features]
     end
 
-    def initialize(key, parent, &condition)
+    def initialize(key, parent, &block_condition)
       @key = key
       @parent = parent
-      @condition = condition
+      @block_condition = block_condition
 
       @full_key = parent.root? ? key : "#{parent.full_key}.#{key}"
       @children = {}
@@ -95,7 +95,13 @@ module Rys
     end
 
     def active?
-      (record && record.active?) && parent.active?
+      if block_condition
+        block_condition.call && parent.active?
+      elsif record
+        record.active? && parent.active?
+      else
+        false
+      end
     end
 
     def record
