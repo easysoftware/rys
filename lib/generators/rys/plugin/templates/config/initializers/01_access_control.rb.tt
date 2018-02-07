@@ -1,0 +1,37 @@
+# Redmine::AccessControl.map do |map|
+#
+#   # ---------------------------------------------------------------------------
+#   # Global level
+#
+#   # View on global
+#
+#   map.permission(:view_<%= name_pluralize %>, {
+#     <%= name %>: [:index, :show]
+#   }, read: true, global: true)
+#
+#   # Manage on global
+#
+#   map.permission(:manage_<%= name_pluralize %>, {
+#     <%= name %>: [:new, :create, :edit, :update, :destroy]
+#   }, require: :loggedin, global: true)
+#
+#   # ---------------------------------------------------------------------------
+#   # Project level
+#
+#   map.project_module :<%= name %> do |pmap|
+#
+#     # View on project
+#
+#     pmap.permission(:view_<%= name %>, {
+#       <%= name %>: [:index, :show]
+#     }, read: true)
+#
+#     # Edit on project
+#
+#     pmap.permission(:manage_<%= name %>, {
+#       <%= name %>: [:new, :create, :edit, :update, :destroy]
+#     }, require: :loggedin)
+#
+#   end
+#
+# end

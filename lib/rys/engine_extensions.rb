@@ -18,6 +18,11 @@ module Rys
         end
       end
 
+      # To load after Redmine
+      base.config.before_configuration do |app|
+        app.config.railties_order.unshift(base)
+      end
+
       # To prepend view path after Redmine and plugins
       base.move_initializer(:add_view_paths, after: :load_config_initializers)
     end

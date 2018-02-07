@@ -1,0 +1,24 @@
+# Redmine::MenuManager.map :admin_menu do |menu|
+#   menu.push :<%= name %>,
+#             :<%= name_pluralize %>_path,
+#             caption: :label_<%= name_pluralize %>,
+#             html: { class: 'icon icon-invoice' },
+#             if: proc { |p| User.current.admin? }
+# end
+
+# Redmine::MenuManager.map :project_menu do |menu|
+#   menu.push :<%= name %>,
+#             :<%= name_pluralize %>_path,
+#             caption: :label_<%= name_pluralize %>,
+#             param: :project_id,
+#             html: { class: 'icon icon-invoice' },
+#             if: proc { |p| User.current.admin? }
+# end
+
+# Redmine::MenuManager.map :top_menu do |menu|
+#   menu.push :<%= name %>,
+#             :<%= name_pluralize %>_path,
+#             caption: :label_<%= name_pluralize %>,
+#             html: { class: 'icon icon-invoice' },
+#             if: proc { |p| User.current.admin? }
+# end

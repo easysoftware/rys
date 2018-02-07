@@ -8,15 +8,10 @@ module Rys
       template 'README.md'
     end
 
-    def lib
-      super
-      template 'lib/%name%/features.rb'
-      template 'lib/%name%/hooks.rb'
-    end
-
     def config
       super
       template 'config/locales/en.yml.tt'
+      directory 'config/initializers'
     end
 
   end
@@ -61,6 +56,10 @@ module Rys
 
     def with_dummy_app?
       false
+    end
+
+    def name_pluralize
+      @name_pluralize ||= name.pluralize
     end
 
     def get_builder_class
