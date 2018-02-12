@@ -1,0 +1,5 @@
+Description:
+    Generate Rys patch
+
+Example:
+    rails generate rys:patch TYPE PLUGIN NAME
