@@ -12,7 +12,9 @@ Gem::Specification.new do |s|
   s.description = 'Description of <%= camelized %>.'
   s.license     = 'GNU/GPL 2'
 
-  s.files = Dir['{app,config,db,lib,spec}/**/*', 'Rakefile', 'README.md']
+  s.files = Dir['{app,config,db,lib}/**/*', 'Rakefile', 'README.md']
+  s.test_files = Dir['test/**/*', 'spec/**/*']
 
   s.add_dependency 'rys'
+  s.add_development_dependency 'pry-rails', '~>0.3.6'
 end

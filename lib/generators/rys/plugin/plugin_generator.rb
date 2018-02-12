@@ -71,7 +71,9 @@ module Rys
       build(:rakefile)
       build(:gemspec)
       build(:gitignore) unless options[:skip_git]
-      build(:gemfile)   unless options[:skip_gemfile]
+      build(:gemfile)
+      template '.dummy_control.rb'
+      template '.gitlab-ci.yml'
 
       build(:bin, true)
       directory 'db'

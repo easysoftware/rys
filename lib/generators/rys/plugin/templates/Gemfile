@@ -1,0 +1,11 @@
+source 'https://rubygems.org'
+gemspec
+
+gem "rys", git: "git@git.easy.cz:platform-2.0/rys.git", branch: "master"
+
+local_gemfile = File.join(File.dirname(__FILE__), "test/dummy", "Gemfile")
+if File.exists?(local_gemfile)
+  eval_gemfile local_gemfile
+else
+  puts "Missing dummy Easy Redmine"
+end
