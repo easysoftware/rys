@@ -157,7 +157,20 @@ Rys::Patcher.add('IssuesController') do
 end
 ```
 
-## Plugins
+#### Generating
+
+You can also generate patch via command
+
+```
+rails generate rys:patch TYPE PLUGIN NAME
+
+rails generate rys:patch m RYS_PLUGIN_NAME Issue
+rails generate rys:patch model RYS_PLUGIN_NAME Issue
+rails generate rys:patch helper RYS_PLUGIN_NAME Issues
+```
+
+
+## Rys plugins
 
 Target directory can be set via `--path` options or via environment varible `RYS_PLUGINS_PATH`.
 
@@ -168,7 +181,7 @@ rails generate rys:plugin RYS_PLUGIN
 
 That will generate plugin into `rys_plugins` and add record into your `Gemfile.local`.
 
-### Generators
+### Rails generators
 
 You can use the same generator like in any Rails plugin. Just add prefix `rys` and specify Rys plugin name.
 
