@@ -31,7 +31,7 @@ module Rys
 
     initializer 'rys.features' do |app|
       # Tu run just `db:migrate`
-      if app.root.to_s != root.to_s
+      if app.root.to_s !~ /#{root.to_s}/
         config.paths['db/migrate'].expanded.each do |expanded_path|
           app.config.paths['db/migrate'] << expanded_path
         end

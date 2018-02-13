@@ -1,0 +1,4 @@
+/.bundle
+/spec/dummy
+/Gemfile.lock
+/redmine.tar.gz

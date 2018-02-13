@@ -1,69 +1,24 @@
-# require 'capybara/rspec'
+$:.push File.expand_path('../lib', __dir__)
+ENV['RAILS_ENV'] ||= 'test'
+
+require File.join(__dir__, 'dummy/config/environment')
 require 'rspec/rails'
-require 'pry-rails'
-require 'faker'
-require 'factory_bot_rails'
-require 'database_cleaner'
-require 'sass-rails'
-require 'authlogic/test_case'
 
-Dir.glob(File.expand_path('../support/*.rb', __FILE__)).each do |file|
-  require file
-end
-
-ActiveRecord::Migration.maintain_test_schema!
-
-# See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
 
+  # Enables zero monkey patching mode for RSpec.
+  config.disable_monkey_patching!
+
+  # Sets the expectation framework module(s) to be included in each example group.
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
 
+  # Sets the mock framework adapter module.
   config.mock_with :rspec do |mocks|
     mocks.verify_partial_doubles = true
   end
 
-  config.include FactoryBot::Syntax::Methods
-
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation, except: %w(ar_internal_metadata))
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
-  end
-
-  config.before(:each, js: true) do
-    DatabaseCleaner.strategy = :truncation
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
-
-  config.append_after(:each) do
-    DatabaseCleaner.clean
-  end
-
-  config.use_transactional_fixtures = false
-
-  config.infer_spec_type_from_file_location!
-
-  config.filter_rails_from_backtrace!
-
-  config.before(:each) do |ex|
-    meta = ex.metadata
-    unless meta[:null]
-      logged_user case meta[:logged]
-                  when :admin
-                    FactoryGirl.create(:admin_user, language: 'en')
-                  when true
-                    FactoryGirl.create(:user, language: 'en')
-                  else
-                    User.anonymous
-                  end
-    end
-  end
-
+  # Configures how RSpec treats metadata passed as part of a shared example group definition.
+  config.shared_context_metadata_behavior = :apply_to_host_groups
 end

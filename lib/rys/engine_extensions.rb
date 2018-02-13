@@ -11,7 +11,7 @@ module Rys
       base.initializers_moves = []
 
       base.initializer :append_migrations do |app|
-        if app.root.to_s != root.to_s
+        if app.root.to_s !~ /#{root.to_s}/
           config.paths['db/migrate'].expanded.each do |expanded_path|
             app.config.paths['db/migrate'] << expanded_path
           end

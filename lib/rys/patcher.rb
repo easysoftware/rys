@@ -67,11 +67,11 @@ module Rys
         end
 
         result[:instance_methods].each do |options, block|
-          perpend_methods(klass_to_patch, options, block)
+          prepended_methods(klass_to_patch, options, block)
         end
 
         result[:class_methods].each do |options, block|
-          perpend_methods(klass_to_patch.singleton_class, options, block)
+          prepended_methods(klass_to_patch.singleton_class, options, block)
         end
       end
 
@@ -84,7 +84,7 @@ module Rys
     #     end
     #   end
     #
-    def self.perpend_methods(klass_to_patch, options, block)
+    def self.prepended_methods(klass_to_patch, options, block)
       mod = Rys::PatchModule.new(&block)
 
       if options[:feature]
