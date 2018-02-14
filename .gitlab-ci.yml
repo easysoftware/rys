@@ -11,9 +11,6 @@ before_script:
   - ruby -v
 
 Test:
-  tags:
-  - mysql
-  - postgresql
   script:
   - spec/prepare_redmine.sh
   - bundle install --without xapian rmagick
