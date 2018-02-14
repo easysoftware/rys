@@ -12,10 +12,6 @@ function dummy_download {
   mv "redmine-$REDMINE_VERSION" $DUMMY_PATH
 }
 
-function add_rys_gem {
-  # echo "gem 'rys', path: '$(pwd)'" > "$DUMMY_PATH/Gemfile.local"
-}
-
 function generate_database_yml {
   ruby -ryaml -e "
     config = {
@@ -57,7 +53,6 @@ if [[ -d "$DUMMY_PATH/app" ]]; then
   echo "Dummy application exist"
 else
   dummy_download
-  add_rys_gem
 
   pushd $DUMMY_PATH
     generate_database_yml
