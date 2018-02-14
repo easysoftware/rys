@@ -4,6 +4,8 @@ module Rys
     def self.included(base)
       base.extend(ClassMethods)
 
+      Rys::PluginsManagement.add(base)
+
       patches_dir = base.root.join('patches')
       Rys::Patcher.paths << patches_dir if patches_dir.directory?
 
