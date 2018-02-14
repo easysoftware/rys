@@ -169,6 +169,12 @@ rails generate rys:patch model RYS_PLUGIN_NAME Issue
 rails generate rys:patch helper RYS_PLUGIN_NAME Issues
 ```
 
+Or you can use interactive generator
+
+```
+rails generate rys:ipatch
+```
+
 
 ## Rys plugins
 
