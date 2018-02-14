@@ -6,7 +6,15 @@ module Rys
 
     def create_patch
       require 'tty-prompt'
-      @prompt = TTY::Prompt.new
+      @prompt = TTY::Prompt.new(interrupt: :exit)
+
+      @plugin = @prompt.select('Choose target plugin') do |menu|
+        Rys::PluginsManagement.instance.plugins.each do |plugin|
+          menu.choice plugin.name, plugin
+        end
+      end
+
+      self.destination_root = plugin.root
 
       loop {
         run
@@ -19,18 +27,11 @@ module Rys
 
       def run
         @type = nil
-        @plugin = nil
         @name = nil
 
         @type = @prompt.select('Choose patch type', ['Controller', 'Model', 'Helper', 'Other'])
-        @plugin = @prompt.select('Choose target plugin') do |menu|
-          Rys::PluginsManagement.instance.plugins.each do |plugin|
-            menu.choice plugin.name, plugin
-          end
-        end
         @name = @prompt.ask('Name of class or module:', required: true)
 
-        self.destination_root = plugin.root
         create_patch_by_type
       end
 
