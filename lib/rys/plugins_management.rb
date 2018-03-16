@@ -9,6 +9,16 @@ module Rys
       instance.add(engine_klass)
     end
 
+    def self.all
+      if block_given?
+        instance.plugins.each do |plugin|
+          yield plugin
+        end
+      else
+        instance.plugins
+      end
+    end
+
     def initialize
       @plugins = []
     end
