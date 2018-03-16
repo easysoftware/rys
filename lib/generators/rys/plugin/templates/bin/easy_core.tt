@@ -1,0 +1,4 @@
+require 'bundler'
+
+spec = Bundler.load.specs.find{|s| s.name.to_s == 'easy_core' }
+load File.join(spec.full_gem_path, 'bin/easy_core')

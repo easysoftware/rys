@@ -8,6 +8,10 @@ module Rys
       template 'README.md'
     end
 
+    def gemfile
+      template 'gems.rb'
+    end
+
     def config
       super
       template 'config/locales/en.yml.tt'
@@ -72,11 +76,12 @@ module Rys
       build(:gemspec)
       build(:gitignore) unless options[:skip_git]
       build(:gemfile)
-      template '.dummy_control.rb'
-      template '.gitlab-ci.yml'
-
       build(:bin, true)
+
       directory 'db'
+
+      # template '.dummy_control.rb'
+      template '.gitlab-ci.yml'
     end
 
     def create_patches
@@ -109,7 +114,7 @@ module Rys
         path = "'rys_plugins/#{app_path}'"
       end
 
-      entry = "\ngem '#{name}', path: #{path}\n"
+      entry = "\ngem '#{name}', path: #{path}, group: [:default, :rys]"
       append_file gemfile_local, entry
     end
 
