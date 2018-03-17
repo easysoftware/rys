@@ -1,4 +1,5 @@
 *.log
+gems.locked
 gems.dependencies.rb
 .bundle/
 pkg/
