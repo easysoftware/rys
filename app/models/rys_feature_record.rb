@@ -1,7 +1,7 @@
 class RysFeatureRecord < ActiveRecord::Base
   self.table_name = 'rys_features'
 
-  scope :enabled, proc { where(name: Rys::Feature.all_features.keys) }
+  scope :registered, proc { where(name: Rys::Feature.all_features.keys) }
 
   def self.migrate_new
     return unless table_exists?
