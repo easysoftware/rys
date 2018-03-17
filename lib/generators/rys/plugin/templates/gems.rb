@@ -1,31 +1,18 @@
 source 'https://rubygems.org'
 git_source(:easy_git){ |name| "git@git.easy.cz:platform-2.0/#{name}.git" }
 
-gemspec
+# There are defined commands, after install hook and custom hooks
+plugin 'rys-bundler', easy_git: 'rys-bundler', branch: 'master'
 
+# Common dependencies
+eval_gemfile('dependencies.rb')
 
-# This section can be loaded into main Application
-#
-group :rys do
-  group :default do
-    gem 'rys', easy_git: 'rys', branch: 'master'
-    gem 'easy_core', easy_git: 'easy_core', branch: 'master'
-  end
+# Loading gems dependecies in right moment
+Plugin.hook('rys-gemfile', self)
 
-  # group :development do
-  # end
-
-  # group :test do
-  # end
-end
-
-
-# This section is for developing inside gem
-#
-local_gemfile = File.join(__dir__, 'spec/dummy/Gemfile')
-
-if File.exists?(local_gemfile)
-  eval_gemfile(local_gemfile)
-else
-  puts 'Missing dummy Easy Redmine'
-end
+# Loading gems from dummy application
+# Possible paths (by priority)
+#   1. As second argument
+#   2. Environment variable DUMMY_PATH
+#   3. Current_dir / spec / dummy
+Plugin.hook('rys-load-dummy', self)

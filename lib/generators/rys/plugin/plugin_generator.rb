@@ -10,12 +10,24 @@ module Rys
 
     def gemfile
       template 'gems.rb'
+      template 'dependencies.rb'
     end
 
     def config
       super
       template 'config/locales/en.yml.tt'
       directory 'config/initializers'
+    end
+
+    def lib
+      template "lib/%name%.rb"
+      template "lib/tasks/%name%.rake"
+      template "lib/%name%/version.rb"
+      template "lib/%name%/engine.rb"
+    end
+
+    def gitignore
+      template '.gitignore'
     end
 
   end
@@ -80,8 +92,8 @@ module Rys
 
       directory 'db'
 
-      # template '.dummy_control.rb'
       template '.gitlab-ci.yml'
+      template '.rspec'
     end
 
     def create_patches

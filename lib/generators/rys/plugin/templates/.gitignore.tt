@@ -1,0 +1,5 @@
+*.log
+gems.dependencies.rb
+.bundle/
+pkg/
+spec/dummy/

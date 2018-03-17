@@ -1,0 +1,4 @@
+# module <%= camelized %>::Test
+#   module Helper
+#   end
+# end

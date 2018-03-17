@@ -1,12 +1,9 @@
-ENV['RAILS_ENV'] ||= 'test'
+require 'bundler'
 
-require 'pry-rails'
+spec = Bundler.load.specs.find{|s| s.name.to_s == 'easy_core' }
 
-# require File.expand_path('./config/environment')
-# require Rails.root.join('./config/environment')
-require File.expand_path('../dummy/config/environment.rb', __FILE__)
+if !spec
+  abort('Gem easy_core was not found. Please add it and run bundle install again.')
+end
 
-# Prevent database truncation if the environment is production
-abort('The Rails environment is running in production mode!') if Rails.env.production?
-
-require 'easy_extensions/spec_helper'
+require File.join(spec.full_gem_path, 'spec/spec_helper')
