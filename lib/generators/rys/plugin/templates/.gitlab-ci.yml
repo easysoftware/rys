@@ -11,26 +11,44 @@ before_script:
   - rvm use ruby $RUBY_VERSION >/dev/null 2>&1
   - ruby -v
 
+variables:
+  REPO: easyredmine/stable-2016
+  MYSQL_USERNAME: root
+  MYSQL_PASSWORD: $MYSQL_PASS
+  PG_USERNAME: postgres
+  PG_PASSWROD: ''
+
+stages:
+  - me
+  - ryses
+  - easy
 
 # -----------------------------------------------------------------------------
-# Stage: Test
+# Stage: Me
 
-MySQL:
+Me / MySQL:
   stage: test
   tags:
   - mysql
   script:
-  - bundle install
-  - bin/easy_core run-easy-tests-ci
+  - bin/easy_core ci-run-easy --mysql --test me
 
-# PostgreSQL:
-#   stage: test
-#   tags:
-#   - postgresql
-#   script:
-#   - ruby ./.dummy_control.rb -a postgresql
-#   - bundle install --without xapian rmagick
-#   - rake db:migrate
-#   - pwd
-#   - bundle exec rspec
+# -----------------------------------------------------------------------------
+# Stage: Ryses
 
+Ryses / MySQL:
+  stage: test
+  tags:
+  - mysql
+  script:
+  - bin/easy_core ci-run-easy --mysql --test ryses
+
+# -----------------------------------------------------------------------------
+# Stage: Easyproject
+
+Easyproject / MySQL:
+  stage: test
+  tags:
+  - mysql
+  script:
+  - bin/easy_core ci-run-easy --mysql --test easyproject

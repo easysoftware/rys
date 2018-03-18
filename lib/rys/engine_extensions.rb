@@ -13,7 +13,10 @@ module Rys
       base.initializers_moves = []
 
       base.initializer :append_migrations do |app|
-        if app.root.to_s !~ /#{root.to_s}/
+        if defined?(ENGINE_PATH) && base.root.to_s == ENGINE_PATH
+          # Rails is loaded through this engine
+          # and migrations are automatically added
+        else
           config.paths['db/migrate'].expanded.each do |expanded_path|
             app.config.paths['db/migrate'] << expanded_path
           end

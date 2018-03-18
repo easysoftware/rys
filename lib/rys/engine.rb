@@ -30,8 +30,10 @@ module Rys
     end
 
     initializer 'rys.features' do |app|
-      # Tu run just `db:migrate`
-      if app.root.to_s !~ /#{root.to_s}/
+      if defined?(ENGINE_PATH) && root.to_s == ENGINE_PATH
+        # Rails is loaded through this engine
+        # and migrations are automatically added
+      else
         config.paths['db/migrate'].expanded.each do |expanded_path|
           app.config.paths['db/migrate'] << expanded_path
         end

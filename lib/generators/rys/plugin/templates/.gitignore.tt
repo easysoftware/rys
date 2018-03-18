@@ -3,4 +3,5 @@ gems.locked
 gems.dependencies.rb
 .bundle/
 pkg/
+test/
 spec/dummy/

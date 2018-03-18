@@ -16,5 +16,5 @@ Plugin.hook('rys-gemfile', self)
 # Possible paths (by priority)
 #   1. As second argument
 #   2. Environment variable DUMMY_PATH
-#   3. Current_dir / spec / dummy
+#   3. Current_dir / test / dummy
 Plugin.hook('rys-load-dummy', self)
