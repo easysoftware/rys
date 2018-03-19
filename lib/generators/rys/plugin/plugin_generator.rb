@@ -88,10 +88,7 @@ module Rys
       build(:gemspec)
       build(:gitignore) unless options[:skip_git]
       build(:gemfile)
-      build(:bin, true)
-
       directory 'db'
-
       template '.gitlab-ci.yml'
       template '.rspec'
     end

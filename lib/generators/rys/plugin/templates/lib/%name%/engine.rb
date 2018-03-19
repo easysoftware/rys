@@ -1,3 +1,5 @@
+require 'rys'
+
 module <%= camelized %>
   class Engine < ::Rails::Engine
     include Rys::EngineExtensions
