@@ -138,8 +138,17 @@ module Rys
     end
 
     def informations
-      shell.say
-      shell.say_status 'created in', destination_root
+      shell.say_status 'INFO', ''
+      shell.say_status 'INFO', ''
+      shell.say_status 'INFO', "Plugin was created in: #{destination_root}"
+      shell.say_status 'INFO', "To set local path: bundle config local.#{name} #{destination_root}"
+
+      one_liners = Rys::Engine.root.join('config/one_liners.txt')
+      if one_liners.exist?
+        line = one_liners.readlines.sample
+        shell.say_status 'INFO', ''
+        shell.say_status 'INFO', %{"#{line.chomp}"}
+      end
     end
 
   end
