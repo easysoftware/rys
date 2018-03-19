@@ -2,20 +2,35 @@
 
 Name is a big mistery. Do not bother to figure it out :-).
 
-Library is similar to Railties but in Redmine environment. Contains:
+Library is similar to Railties but within Redmine environment.
 
+- plugin generator
 - feature toggler
 - patcher manager
-- plugin generator
 - interface to Redmine
 
 All you need to do is insert `gem 'rys'` into your Gemfile. If you want develop this gem or its plugis locally you can set bundler:
 
 `bundle config local.GEM_NAME GEM_PATH`
 
+#### Dependecies
+
+Install all dependecies are not so easy like with redmine plugins. For this purpose check gem `rys-bundler`.
+
+## Rys plugins
+
+Target directory can be set via option `--path` or via environment varible `RYS_PLUGINS_PATH`. Otherwise `RAILS_ROOT/rys_plugins` is chosen.
+
+```
+rails generate rys:plugin --help
+rails generate rys:plugin NAME
+```
+
+Also gem is automatically appended into `Gemfile.local`.
+
 ## Features
 
-You can toggle some code base on database state.
+You can toggle some code base on database state or by custom definiton. First you need to register features.
 
 ```ruby
 # Basic definition
@@ -23,7 +38,7 @@ You can toggle some code base on database state.
 Rys::Feature.add('issue.show')
 ```
 
-All features have tree structure so if parent disabled all children are disabled too. For example:
+All features have tree structure so if parent is disabled all children are disabled too. For example:
 
 ```ruby
 Rys::Feature.add('issue.show')
@@ -75,7 +90,7 @@ end
 
 ### Custom condition
 
-If you don't want to use DB record checking you can also define custom conditions.
+If you don't want to use DB record checking you can define custom condition.
 
 ```ruby
 # Ruby block state
@@ -84,7 +99,7 @@ Rys::Feature.add('issue.show') do
 end
 ```
 
-Or you can use both way like
+Or you can use both approaches with:
 
 ```ruby
 Rys::Feature.add('issue.show') do
@@ -106,7 +121,7 @@ include ::Rys::EngineExtensions
 Rys::Patcher.paths << PATH_TO_DIRECTORY
 ```
 
-Now you can define patch
+Now you can define a patch
 
 ```ruby
 Rys::Patcher.add(CLASS_TO_PATCH) do
@@ -159,7 +174,7 @@ end
 
 #### Generating
 
-You can also generate patch via command
+Patches can be generated via command:
 
 ```
 rails generate rys:patch TYPE PLUGIN NAME
@@ -175,24 +190,12 @@ Or you can use interactive generator
 rails generate rys:ipatch
 ```
 
-
-## Rys plugins
-
-Target directory can be set via `--path` options or via environment varible `RYS_PLUGINS_PATH`.
-
-```
-rails generate rys:plugin --help
-rails generate rys:plugin RYS_PLUGIN
-```
-
-That will generate plugin into `rys_plugins` and add record into your `Gemfile.local`.
-
 ### Rails generators
 
 You can use the same generator like in any Rails plugin. Just add prefix `rys` and specify Rys plugin name.
 
 ```
-rails generate rys:model RYS_PLUGIN NAME ...normal arguments...
-rails generate rys:scaffold RYS_PLUGIN NAME ...normal arguments...
-rails generate rys:controller RYS_PLUGIN NAME ...normal arguments...
+rails generate rys:model RYS_PLUGIN_NAME ...normal arguments...
+rails generate rys:scaffold RYS_PLUGIN_NAME ...normal arguments...
+rails generate rys:controller RYS_PLUGIN_NAME ...normal arguments...
 ```

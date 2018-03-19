@@ -5,11 +5,16 @@ module Rys
     attr_reader :type, :plugin, :name
 
     def create_patch
+      if Rys::PluginsManagement.all.size.zero?
+        puts 'There are no rys plugins'
+        exit 1
+      end
+
       require 'tty-prompt'
       @prompt = TTY::Prompt.new(interrupt: :exit)
 
       @plugin = @prompt.select('Choose target plugin') do |menu|
-        Rys::PluginsManagement.instance.plugins.each do |plugin|
+        Rys::PluginsManagement.all do |plugin|
           menu.choice plugin.name, plugin
         end
       end
