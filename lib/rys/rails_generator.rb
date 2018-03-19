@@ -1,9 +1,14 @@
+require 'rspec-rails'
+
 module Rys
   module RailsGenerator
     class Base < ::Rails::Generators::NamedBase
 
       def self.namespace
         "rys:#{origin_name}"
+      end
+
+      def self.modify_args!(args)
       end
 
       def self.help(shell)
@@ -17,7 +22,10 @@ module Rys
         name = ARGV.shift.to_s.camelize
         plugin = "#{name}::Engine".constantize
 
-        Rails::Generators.invoke self.class.origin_name, ARGV, behavior: :invoke, destination_root: plugin.root
+        args = ARGV
+        self.class.modify_args!(args)
+
+        Rails::Generators.invoke self.class.origin_name, args, behavior: :invoke, destination_root: plugin.root
       end
 
     end
@@ -26,6 +34,10 @@ module Rys
 
       def self.origin_name
         'model'
+      end
+
+      def self.modify_args!(args)
+        args << '--test' << 'rspec' << '--no-fixture'
       end
 
     end
@@ -42,6 +54,10 @@ module Rys
 
       def self.origin_name
         'controller'
+      end
+
+      def self.modify_args!(args)
+        args << '--test-framework' << 'rspec'
       end
 
     end
