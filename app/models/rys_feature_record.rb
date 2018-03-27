@@ -27,4 +27,9 @@ class RysFeatureRecord < ActiveRecord::Base
     record && record.active?
   end
 
+  def self.activate!(*full_keys)
+    request_store.clear
+    RysFeatureRecord.where(name: full_keys).update_all(active: true)
+  end
+
 end
