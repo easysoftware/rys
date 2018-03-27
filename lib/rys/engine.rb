@@ -3,11 +3,20 @@ module Rys
 
     config.generators do |g|
       g.test_framework :rspec, fixture: false
+      g.integration_tool :rspec
       g.assets false
       g.helper false
     end
 
     generators do
+      config.app_generators.integration_tool 'rys:rspec'
+      config.app_generators.test_framework 'rys:rspec'
+
+      # Rails hide by default `#{test_framework}:*`
+      ::Rails::Generators.hidden_namespaces.reject! do |namespace|
+        namespace.to_s.start_with?('rys:rspec')
+      end
+
       require 'rys/rails_generator'
     end
 
