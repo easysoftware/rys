@@ -130,7 +130,8 @@ module Rys
     def init_git
       return if options[:skip_git]
 
-      git :init
+      # Capture for less verbose
+      run 'git init', capture: true
       git add: '.'
     end
 
