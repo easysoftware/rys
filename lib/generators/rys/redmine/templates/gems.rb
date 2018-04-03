@@ -8,7 +8,7 @@ this_dir = Pathname.new(__dir__)
 
 all_gemspecs = Pathname.glob(this_dir.join('{gems,local}/*/*.gemspec'))
 all_gemspecs.each do |gemspec|
-  gem gemspec.basename.sub('.gemspec', '').to_s, path: gemspec.relative_path_from(this_dir)
+  gem gemspec.basename.sub('.gemspec', '').to_s, path: gemspec.dirname
 end
 
 plugin 'rys-bundler', easy_git: 'rys-bundler', branch: 'master'
