@@ -6,10 +6,15 @@ module Rys
       class PluginGenerator < ::Rails::Generators::NamedBase
         source_root File.expand_path('templates', __dir__)
 
+        class_option :force, desc: 'Force to create a Plugin',
+                             aliases: ['-f'],
+                             type: :boolean,
+                             default: false
+
         def generate_redmine_plugin
           target_dir = Rails.root.join('plugins', name)
 
-          if target_dir.directory?
+          if target_dir.directory? && !options[:force]
             error 'Plugin generating failed'
             error "Directory '#{target_dir}' exist"
             exit 1
@@ -32,6 +37,7 @@ module Rys
           end
 
           template '.gitignore', target_dir.join('.gitignore')
+          template 'rys.rb', target_dir.join('rys.rb')
         end
 
         private
