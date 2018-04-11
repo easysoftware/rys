@@ -20,7 +20,8 @@ module Rys
       require 'rys/rails_generator'
     end
 
-    initializer 'rys.patches' do |app|
+    # All plugins must be loaded now!!!
+    config.before_initialize do |app|
       dirs = {}
       Rys::Patcher.paths.each do |path|
         dirs[path.to_s] = ['rb']
@@ -35,6 +36,7 @@ module Rys
       config.to_prepare do
         patches_reloader.execute_if_updated
         Rys::Patcher.apply
+        Rys::Patcher.applied_count += 1
       end
     end
 
@@ -50,6 +52,14 @@ module Rys
 
       app.middleware.use 'Rys::FeaturePreload'
       RysFeatureRecord.migrate_new
+    end
+
+    # For patches where you set
+    #   where :earlier_to_prepare
+    #
+    # Useful when you nedd something before loading easy plugins
+    ActionDispatch::Reloader.to_prepare do
+      Rys::Patcher.apply(where: :earlier_to_prepare)
     end
 
   end

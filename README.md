@@ -126,6 +126,8 @@ Now you can define a patch
 ```ruby
 Rys::Patcher.add(CLASS_TO_PATCH) do
 
+  where WHERE
+
   apply_only_once!
 
   apply_if do

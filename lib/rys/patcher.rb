@@ -10,72 +10,45 @@ module Rys
     mattr_accessor :applied_count
     self.applied_count = 0
 
-    mattr_accessor :currently_modified_klasses
-    self.currently_modified_klasses = []
-
-    mattr_accessor :currently_modified_klasses
-    self.currently_modified_klasses = []
-
     def self.add(klass_to_patch, &block)
-      patches << [klass_to_patch, block]
+      patches << Patch.new(klass_to_patch, &block)
       self
     end
 
     def self.reload_patches
-      # currently_modified_klasses.each do |klass|
-      #   begin
-      #     # Constants which are not defined in Rails are not
-      #     # removed. So ancestors remains. Solutions is keep
-      #     # them but remove their content.
-      #     klass_to_patch = klass.constantize
-      #     klass_to_patch.ancestors.each do |ancestor|
-      #       if ancestor.is_a?(Rys::PatchModule)
-      #         ancestor.remove_patch_methods
-      #       end
-      #     end
-      #   rescue NameError
-      #   end
-      # end
-      currently_modified_klasses.clear
-
       patches.clear
       paths.each do |path|
-        pattern = File.join(path, '**', '*.rb')
+        pattern = File.join(path, '**/*.rb')
         Dir.glob(pattern){|f| load(f) }
       end
     end
 
-    def self.apply
-      patches.each do |klass_to_patch, block|
-        currently_modified_klasses << klass_to_patch
-        klass_to_patch = klass_to_patch.constantize
+    def self.apply(where: nil)
+      patches.each do |patch|
+        next if patch.where != where
 
-        dsl = Rys::PatcherDSL.new
-        dsl.instance_eval(&block)
-        result = dsl._result
+        klass_to_patch = patch.klass.constantize
 
-        if result[:apply_only_once] && applied_count != 0
+        if patch.apply_only_once && applied_count != 0
           next
         end
 
-        if result[:apply_if] && !result[:apply_if].call
+        if patch.apply_if && !patch.apply_if.call
           next
         end
 
-        result[:included].each do |included|
+        patch.includeds.each do |included|
           klass_to_patch.class_eval(&included)
         end
 
-        result[:instance_methods].each do |options, block|
+        patch.instance_methods.each do |options, block|
           prepended_methods(klass_to_patch, options, block)
         end
 
-        result[:class_methods].each do |options, block|
+        patch.class_methods.each do |options, block|
           prepended_methods(klass_to_patch.singleton_class, options, block)
         end
       end
-
-      self.applied_count += 1
     end
 
     # TODO: What should happen if
@@ -122,21 +95,35 @@ module Rys
   class PatcherDSL
 
     def initialize
+      @_where = nil
       @_apply_if = nil
       @_apply_only_once = false
-      @_included = []
+      @_includeds = []
       @_instance_methods = []
       @_class_methods = []
     end
 
     def _result
       {
+        where: @_where,
         apply_if: @_apply_if,
         apply_only_once: @_apply_only_once,
-        included: @_included,
+        includeds: @_includeds,
         instance_methods: @_instance_methods,
-        class_methods: @_class_methods
+        class_methods: @_class_methods,
       }
+    end
+
+    def name
+      # Comming soon
+    end
+
+    def before
+      # Comming soon
+    end
+
+    def where(place)
+      @_where = place
     end
 
     def apply_if(value=nil, &block)
@@ -154,7 +141,7 @@ module Rys
     end
 
     def included(&block)
-      @_included << block
+      @_includeds << block
     end
 
     def instance_methods(**options, &block)
@@ -165,6 +152,7 @@ module Rys
       @_class_methods << [options, block]
     end
 
+    alias_method :includeds, :included
   end
 end
 
@@ -175,6 +163,46 @@ module Rys
       instance_methods.each do |met|
         remove_method met
       end
+    end
+
+  end
+end
+
+module Rys
+  class Patch
+
+    attr_reader :klass, :result
+
+    def initialize(klass, &block)
+      @klass = klass
+
+      dsl = Rys::PatcherDSL.new
+      dsl.instance_eval(&block)
+      @result = dsl._result
+    end
+
+    def where
+      result[:where]
+    end
+
+    def apply_only_once
+      result[:apply_only_once]
+    end
+
+    def apply_if
+      result[:apply_if]
+    end
+
+    def includeds
+      result[:includeds]
+    end
+
+    def instance_methods
+      result[:instance_methods]
+    end
+
+    def class_methods
+      result[:class_methods]
     end
 
   end
