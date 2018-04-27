@@ -32,4 +32,8 @@ class RysFeatureRecord < ActiveRecord::Base
     RysFeatureRecord.where(name: full_keys).update_all(active: true)
   end
 
+  def feature
+    Rys::Feature.all_features[name]
+  end
+
 end

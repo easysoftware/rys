@@ -8,16 +8,17 @@ module Rys
     self.all_features = {}
 
     attr_reader :key, :full_key, :parent, :children
-    attr_accessor :block_condition
+    attr_accessor :block_condition, :options
 
     def self.root
       Rys::RootFeature.instance
     end
 
-    def self.add(key, &block_condition)
+    def self.add(key, **options, &block_condition)
       synchronize {
         feature = root.fetch_or_create(key)
         feature.block_condition = block_condition
+        feature.options = options
         feature
       }
     end
@@ -34,6 +35,7 @@ module Rys
                    true
                  end
 
+        # If one feature is inactive -> whole statement is inactive
         if !result
           return false
         end
@@ -49,10 +51,11 @@ module Rys
       end
     end
 
-    def initialize(key, parent, &block_condition)
+    def initialize(key, parent)
       @key = key
       @parent = parent
-      @block_condition = block_condition
+      @block_condition = nil
+      @options = {}
 
       @full_key = parent.root? ? key : "#{parent.full_key}.#{key}"
       @children = {}
@@ -93,6 +96,32 @@ module Rys
         RysFeatureRecord.active?(full_key) && parent.active?
       end
     end
+
+    def category
+      options[:category]
+    end
+
+    def title
+      translate_it :title, options[:title]
+    end
+
+    def description
+      translate_it :description, options[:description]
+    end
+
+    private
+
+      def translate_it(field, value)
+        case value
+        when Symbol
+          ::I18n.translate(value)
+        when String
+          value
+        else
+          translation_full_key = full_key.gsub('.', '_')
+          ::I18n.translate("rys_features.#{translation_full_key}.#{field}", default: full_key)
+        end
+      end
 
   end
 end

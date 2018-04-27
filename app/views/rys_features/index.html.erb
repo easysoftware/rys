@@ -1,22 +1,25 @@
+<%= title l('rys.features') %>
+
 <table class="list">
   <tr>
-    <th>Name</th>
-    <th>Active</th>
+    <th><%= l(:field_name) %></th>
+    <th><%= l(:field_description) %></th>
+    <th><%= l(:field_active) %></th>
     <th></th>
   </tr>
 
   <% RysFeatureRecord.registered.sort_by{|r| r.name.split('.') }.each do |feature| %>
     <tr>
-      <td class="subject" style="color: <%= feature.active? ? 'green' : 'red' %>"><%= feature.name %></td>
+      <td class="subject" style="color: <%= feature.active? ? 'green' : 'red' %>"><%= feature.feature.title %></td>
+      <td><%= feature.feature.description %></td>
       <td><%= checked_image(feature.active) %></td>
-      <td>
+      <td class="buttons text-right">
         <% if feature.active? %>
-          <%= link_to 'deactivate', update_rys_feature_path(feature, active: '0'), method: 'POST' %>
+          <%= link_to l('rys.deactivate'), update_rys_feature_path(feature, active: '0'), method: 'POST' %>
         <% else %>
-          <%= link_to 'activate', update_rys_feature_path(feature, active: '1'), method: 'POST' %>
+          <%= link_to l('rys.activate'), update_rys_feature_path(feature, active: '1'), method: 'POST' %>
         <% end %>
       </td>
-      <td></td>
     </tr>
   <% end %>
 </table>

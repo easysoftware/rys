@@ -107,6 +107,21 @@ Rys::Feature.add('issue.show') do
 end
 ```
 
+## Translations
+
+All features have title and description. You can set them via language file or via options.
+
+```ruby
+Rys::Feature.add('issue.show')
+# => I18n.t 'rys_features.issue_show.title'
+# => I18n.t 'rys_features.issue_show.description'
+
+Rys::Feature.add('issue.show', title: :feature_title,
+                               description: :feature_description)
+# => I18n.t 'feature_title'
+# => I18n.t 'feature_description'
+```
+
 # Patch manager
 
 You can easily define patches for your Rails projects in just two steps.
