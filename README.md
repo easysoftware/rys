@@ -219,7 +219,7 @@ rails generate rys:controller RYS_PLUGIN_NAME ...normal arguments...
 
 ### TESTS
 
-Tests requires gem [easy_core](https://github.com/easysoftware/ryspec)
+Tests requires gem [ryspec](https://github.com/easysoftware/ryspec)
 
   1. Setup dummy app (export DUMMY_PATH env OR test/dummy folder...)
   2. Make sure both (dummy and rys) have cleared `.bundle`, `Gemfile.lock`, `gems.locked`
