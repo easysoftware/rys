@@ -216,3 +216,15 @@ rails generate rys:model RYS_PLUGIN_NAME ...normal arguments...
 rails generate rys:scaffold RYS_PLUGIN_NAME ...normal arguments...
 rails generate rys:controller RYS_PLUGIN_NAME ...normal arguments...
 ```
+
+### TESTS
+
+Tests requires gem `easy_core` !
+TODO: link na easy_core repo ;)
+
+  1. Setup dummy app (export DUMMY_PATH env OR test/dummy folder...)
+  2. Make sure both (dummy and rys) have cleared `.bundle`, `Gemfile.lock`, `gems.locked`
+  3. In RYS plugin run `rake app:db:migrate` follow by `rake app:db:test:prepare`
+  4. Feel free tu run `rspec`
+
+
