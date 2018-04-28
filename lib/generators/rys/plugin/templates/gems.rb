@@ -1,10 +1,9 @@
 source 'https://rubygems.org'
-git_source(:easy_git){ |name| "git@git.easy.cz:platform-2.0/#{name}.git" }
 
 gemspec
 
 # There are defined commands, after install hook and custom hooks
-plugin 'rys-bundler', easy_git: 'rys-bundler', branch: 'master'
+plugin 'rys-bundler', github: 'easysoftware/rys-bundler', branch: 'master'
 
 # Common dependencies
 eval_gemfile('dependencies.rb')
