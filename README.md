@@ -217,7 +217,7 @@ rails generate rys:scaffold RYS_PLUGIN_NAME ...normal arguments...
 rails generate rys:controller RYS_PLUGIN_NAME ...normal arguments...
 ```
 
-### TESTS
+### TESTS
 
 Tests requires gem `easy_core` !
 TODO: link na easy_core repo ;)
