@@ -50,7 +50,7 @@ module Rys
         end
       end
 
-      app.middleware.use 'Rys::FeaturePreload'
+      app.middleware.use ::Rys::FeaturePreload
       RysFeatureRecord.migrate_new
     end
 

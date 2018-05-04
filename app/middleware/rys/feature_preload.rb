@@ -34,12 +34,12 @@ module Rys
 
         features = ::RysFeatureRecord.where(name: features)
         features.each do |feature|
-          RysFeatureRecord.request_store[feature.name] = feature
+          ::RysFeatureRecord.request_store[feature.name] = feature
         end
       end
 
       def save_features(env)
-        features = RysFeatureRecord.request_store.keys
+        features = ::RysFeatureRecord.request_store.keys
         path = env['PATH_INFO'].to_s
 
         @mutex.synchronize {
