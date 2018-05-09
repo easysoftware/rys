@@ -67,7 +67,8 @@ module Rys
     #   where :earlier_to_prepare
     #
     # Useful when you nedd something before loading easy plugins
-    ActionDispatch::Reloader.to_prepare do
+    reloader_klass = defined?(ActiveSupport::Reloader) ? ActiveSupport::Reloader : ActionDispatch::Reloader
+    reloader_klass.to_prepare do
       Rys::Patcher.apply(where: :earlier_to_prepare)
     end
 
