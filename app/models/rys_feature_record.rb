@@ -3,6 +3,8 @@ class RysFeatureRecord < ActiveRecord::Base
 
   scope :registered, proc { where(name: Rys::Feature.all_features.keys) }
 
+  after_commit :update_callback, on: :update
+
   def self.migrate_new
     return unless table_exists?
 
@@ -35,5 +37,13 @@ class RysFeatureRecord < ActiveRecord::Base
   def feature
     Rys::Feature.all_features[name]
   end
+
+  private
+
+    def update_callback
+      if previous_changes.has_key?(:active)
+        feature.status_changed(active)
+      end
+    end
 
 end

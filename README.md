@@ -63,6 +63,12 @@ if Rys::Feature.active?('issue.show')
 end
 ```
 
+### Callbacks
+
+```ruby
+Rys::Feature.add('issue.show', status_changed: lambda { |active| ... })
+```
+
 ### In routes
 
 ```ruby

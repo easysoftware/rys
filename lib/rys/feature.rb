@@ -109,6 +109,10 @@ module Rys
       translate_it :description, options[:description]
     end
 
+    def status_changed(active)
+      options[:status_changed]&.(active)
+    end
+
     private
 
       def translate_it(field, value)
