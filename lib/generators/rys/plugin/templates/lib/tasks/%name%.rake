@@ -11,6 +11,6 @@ begin
       task.pattern = <%= camelized %>::Engine.root.join('spec/**/*_spec.rb')
     end
   end
-rescue StandardError
+rescue StandardError, LoadError
   # Ignore when `ryspec` gem missing
 end
