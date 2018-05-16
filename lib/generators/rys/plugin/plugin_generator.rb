@@ -40,6 +40,10 @@ module Rys
     self.source_paths << source_root
     self.source_paths << Rails::Generators::PluginGenerator.source_root
 
+    def self.exit_on_failure?
+      true
+    end
+
     def initialize(*args)
       super
 
