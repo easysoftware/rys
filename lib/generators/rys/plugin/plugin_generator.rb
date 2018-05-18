@@ -15,7 +15,7 @@ module Rys
 
     def config
       super
-      template 'config/locales/en.yml.tt'
+      template 'config/locales/en.yml'
       directory 'config/initializers'
     end
 
