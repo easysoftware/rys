@@ -1,5 +1,4 @@
 stages:
-  - migrations
   - feature
   - full
 
@@ -7,33 +6,21 @@ stages:
 # jobs, including deploy jobs, but after the restoration of artifacts. This can
 # be an array or a multi-line string.
 before_script:
-  - export HOME=/home/gitlab-runner
   - export LC_ALL=en_US.UTF-8
   - ''
   - ruby -v
-  - export TESTER=/opt/gitlab_ci_tester/tester.rb
 
 after_script:
   - ruby $TESTER RysPlugin cleanup
 
 variables:
+  TESTER: /opt/gitlab_ci_tester/tester.rb
   DUMMY_PATH: .dummy
-  JS_DRIVER: chrome
-  CHROME_OPTIONS: headless no-sandbox disable-gpu window-size=1920,1080
-  DUMMY_GIT: https://github.com/redmine/redmine.git
+#  DUMMY_GIT: https://github.com/redmine/redmine.git
 #  DUMMY_BRANCH: master
 
 #.only: &only
 #  - master
-
-# Test migrations
-MySQL / migrations:
-  stage: migrations
-  tags:
-  - mysql
-  script:
-  - ruby $TESTER RysPlugin prepare -a mysql2
-  - ruby $TESTER RysPlugin run_migrations
 
 # Test just plugin
 MySQL / plugin:
