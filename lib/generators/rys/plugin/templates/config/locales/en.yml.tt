@@ -1,3 +1,8 @@
 en:
   <%= name %>:
     plugin_name: "<%= camelized %>"
+
+  rys_features:
+    <%= name %>:
+      title: "<%= name %>"
+      description: "<%= name %>"
