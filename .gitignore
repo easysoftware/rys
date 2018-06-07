@@ -1,4 +1,6 @@
 /.bundle
+.idea/
 /spec/dummy
 /Gemfile.lock
 /redmine.tar.gz
+Gemfile.lock
