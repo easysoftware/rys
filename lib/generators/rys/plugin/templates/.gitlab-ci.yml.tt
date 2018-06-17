@@ -1,49 +1,50 @@
+stages:
+  - feature
+  - full
+
+# Before_script is used to define the command that should be run before all
+# jobs, including deploy jobs, but after the restoration of artifacts. This can
+# be an array or a multi-line string.
 before_script:
-  - export HOME=/home/gitlab-runner
   - export LC_ALL=en_US.UTF-8
-  - export RAILS_ENV=test
   - ''
-  - '[[ -z $RUBY_VERSION ]] && RUBY_VERSION="2.4.2"'
-  - ''
-  - rvm use ruby $RUBY_VERSION >/dev/null 2>&1
   - ruby -v
-  - ''
-  - bundle install
+
+after_script:
+  - ruby $TESTER RysPlugin cleanup
 
 variables:
-  REPO: easyredmine/stable-2016
+  TESTER: /opt/gitlab_ci_tester/tester.rb
+  DUMMY_PATH: .dummy
+#  DUMMY_GIT: https://github.com/redmine/redmine.git
+#  DUMMY_BRANCH: master
 
-stages:
-  - me
-  - ryses
-  - easyproject
+#.only: &only
+#  - master
 
-# -----------------------------------------------------------------------------
-# Stage: Me
-
-Me / MySQL:
-  stage: me
+# Test just plugin
+MySQL / plugin:
+  stage: feature
   tags:
-  - gantt
+  - mysql
   script:
-  - bin/easy_core ci-run-easy --mysql --test me
+  - ruby $TESTER RysPlugin prepare_n_setup -a mysql2
+  - rspec
 
-# -----------------------------------------------------------------------------
-# Stage: Ryses
-
-Ryses / MySQL:
-  stage: ryses
+# Test just plugin - use postgresql runner
+PostgreSQL / plugin:
+  stage: feature
   tags:
-  - gantt
+  - postgresql
   script:
-  - bin/easy_core ci-run-easy --mysql --test ryses
+  - ruby $TESTER RysPlugin prepare_n_setup -a postgresql
+  - rspec
 
-# -----------------------------------------------------------------------------
-# Stage: Easyproject
-
-Easyproject / MySQL:
-  stage: easyproject
+# Test current plugin in context of full application
+MySQL / in context:
+  stage: full
   tags:
-  - gantt
+  - mysql
   script:
-  - bin/easy_core ci-run-easy --mysql --test easyproject
+  - ruby $TESTER RysPlugin prepare_n_setup -a mysql2
+  - ruby $TESTER RysPlugin easyproject_tests
