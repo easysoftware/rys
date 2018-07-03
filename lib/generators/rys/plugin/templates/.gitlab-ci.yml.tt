@@ -1,48 +1,40 @@
+# Stages allows you to have multi stage pipelines
+# https://docs.gitlab.com/ee/ci/yaml/#stages
 stages:
-  - feature
-  - full
+  - ryses
+  - platform
 
-# Before_script is used to define the command that should be run before all
-# jobs, including deploy jobs, but after the restoration of artifacts. This can
-# be an array or a multi-line string.
+# Used to define the command that should be run before all jobs, including deploy jobs.
+# https://docs.gitlab.com/ee/ci/yaml/#before_script-and-after_script
 before_script:
   - export LC_ALL=en_US.UTF-8
   - ''
   - ruby -v
 
-after_script:
-  - ruby $TESTER RysPlugin cleanup
-
+# Variables that are passed to the job environment
+# https://docs.gitlab.com/ee/ci/yaml/#variables
 variables:
-  TESTER: /opt/gitlab_ci_tester/tester.rb
-  DUMMY_PATH: .dummy
+  TESTER: /opt/gitlab_ci_tester/runner.rb
 
-#.only: &only
-#  - master
-
-# Test just plugin
-MySQL / plugin:
-  stage: feature
-  tags:
-  - mysql
-  script:
-  - ruby $TESTER RysPlugin prepare_n_setup -a mysql2
-  - rspec
-
-# Test just plugin - use postgresql runner
-PostgreSQL / plugin:
-  stage: feature
+# Jobs
+# https://docs.gitlab.com/ee/ci/yaml/#jobs
+Me:
+  stage: ryses
   tags:
   - postgresql
   script:
-  - ruby $TESTER RysPlugin prepare_n_setup -a postgresql
-  - rspec
+  - ruby $TESTER rys test_me --adapter postgresql
 
-# Test current plugin in context of full application
-#.MySQL / in context:
-#  stage: full
-#  tags:
-#  - mysql
-#  script:
-#  - ruby $TESTER RysPlugin prepare_n_setup -a mysql2
-#  - ruby $TESTER RysPlugin easyproject_tests
+Ryses:
+  stage: ryses
+  tags:
+  - postgresql
+  script:
+  - ruby $TESTER rys test_all_ryses --adapter postgresql
+
+App:
+  stage: platform
+  tags:
+  - postgresql
+  script:
+  - ruby $TESTER rys test_main_app --adapter postgresql
