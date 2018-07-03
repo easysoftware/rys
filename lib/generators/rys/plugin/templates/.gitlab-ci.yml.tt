@@ -1,49 +1,40 @@
-before_script:
-  - export HOME=/home/gitlab-runner
-  - export LC_ALL=en_US.UTF-8
-  - export RAILS_ENV=test
-  - ''
-  - '[[ -z $RUBY_VERSION ]] && RUBY_VERSION="2.4.2"'
-  - ''
-  - rvm use ruby $RUBY_VERSION >/dev/null 2>&1
-  - ruby -v
-  - ''
-  - bundle install
-
-variables:
-  REPO: easyredmine/stable-2016
-
+# Stages allows you to have multi stage pipelines
+# https://docs.gitlab.com/ee/ci/yaml/#stages
 stages:
-  - me
   - ryses
-  - easyproject
+  - platform
 
-# -----------------------------------------------------------------------------
-# Stage: Me
+# Used to define the command that should be run before all jobs, including deploy jobs.
+# https://docs.gitlab.com/ee/ci/yaml/#before_script-and-after_script
+before_script:
+  - export LC_ALL=en_US.UTF-8
+  - ''
+  - ruby -v
 
-Me / MySQL:
-  stage: me
-  tags:
-  - gantt
-  script:
-  - bin/easy_core ci-run-easy --mysql --test me
+# Variables that are passed to the job environment
+# https://docs.gitlab.com/ee/ci/yaml/#variables
+variables:
+  TESTER: /opt/gitlab_ci_tester/runner.rb
 
-# -----------------------------------------------------------------------------
-# Stage: Ryses
-
-Ryses / MySQL:
+# Jobs
+# https://docs.gitlab.com/ee/ci/yaml/#jobs
+Me:
   stage: ryses
   tags:
-  - gantt
+  - postgresql
   script:
-  - bin/easy_core ci-run-easy --mysql --test ryses
+  - ruby $TESTER rys test_me --adapter postgresql
 
-# -----------------------------------------------------------------------------
-# Stage: Easyproject
-
-Easyproject / MySQL:
-  stage: easyproject
+Ryses:
+  stage: ryses
   tags:
-  - gantt
+  - postgresql
   script:
-  - bin/easy_core ci-run-easy --mysql --test easyproject
+  - ruby $TESTER rys test_all_ryses --adapter postgresql
+
+App:
+  stage: platform
+  tags:
+  - postgresql
+  script:
+  - ruby $TESTER rys test_main_app --adapter postgresql
