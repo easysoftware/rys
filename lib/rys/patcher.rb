@@ -27,7 +27,18 @@ module Rys
       patches.each do |patch|
         next if patch.where != where
 
-        klass_to_patch = patch.klass.constantize
+        begin
+          klass_to_patch = patch.klass.constantize
+        rescue
+          # Pokud neni namigrovana setting tabulka aplikace preskoci nacteni easy pluginu.
+          # Kvuli cemuz nasledne nezna patchovane konstanty.
+          # Zpusobuje tento modul EasyProjectLoader.init!
+          if const_defined?(:Rake) && Rake.application.top_level_tasks.include?("db:migrate")
+            next
+          else
+            raise
+          end
+        end
 
         if patch.apply_only_once && applied_count != 0
           next
