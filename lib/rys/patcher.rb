@@ -151,8 +151,8 @@ module Rys
       @_includeds << block
     end
 
-    def apply_if_plugins(value)
-      @_apply_if_plugins = Array.wrap(value)
+    def apply_if_plugins(*values)
+      @_apply_if_plugins = Array.wrap(values)
     end
 
     def instance_methods(**options, &block)

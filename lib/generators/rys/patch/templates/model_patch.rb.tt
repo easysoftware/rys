@@ -1,10 +1,9 @@
 Rys::Patcher.add('<%= name_camelize %>') do
 
-  # Apply if plugins verifies whether the plugin is installed
-  # Expect the plugin name like symbol or array with symbols
-  # Example: apply_if_plugins :easy_extensions || [:easy_invoice, :easy_crm_cases]
-
-  apply_if_plugins
+  # apply_if_plugins verifies whether the plugin is installed
+  # Example: apply_if_plugins :easy_invoice, :easy_crm_cases
+  #
+  # apply_if_plugins
 
   # Apply if condition is met
   #
