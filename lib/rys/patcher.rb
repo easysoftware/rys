@@ -32,7 +32,8 @@ module Rys
         rescue
           # Pokud neni namigrovana setting tabulka aplikace preskoci nacteni easy pluginu.
           # Kvuli cemuz nasledne nezna patchovane konstanty.
-          # Zpusobuje tento modul EasyProjectLoader.init!
+          # Jedna se napriklad o EasyAutoCompletesController.
+          # Zpusobuje to metoda na tomto modulu EasyProjectLoader.init!
           if const_defined?(:Rake) && Rake.application.top_level_tasks.include?("db:migrate")
             next
           else
