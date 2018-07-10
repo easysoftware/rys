@@ -26,20 +26,9 @@ module Rys
     def self.apply(where: nil)
       patches.each do |patch|
         next if patch.where != where
+        next if patch.apply_if_plugins.present? && !plugin_installed?(patch.apply_if_plugins)
 
-        begin
-          klass_to_patch = patch.klass.constantize
-        rescue
-          # Pokud neni namigrovana setting tabulka aplikace preskoci nacteni easy pluginu.
-          # Kvuli cemuz nasledne nezna patchovane konstanty.
-          # Jedna se napriklad o EasyAutoCompletesController.
-          # Zpusobuje to metoda na tomto modulu EasyProjectLoader.init!
-          if const_defined?(:Rake) && Rake.application.top_level_tasks.include?("db:migrate")
-            next
-          else
-            raise
-          end
-        end
+        klass_to_patch = patch.klass.constantize
 
         if patch.apply_only_once && applied_count != 0
           next
@@ -61,6 +50,10 @@ module Rys
           prepended_methods(klass_to_patch.singleton_class, options, block)
         end
       end
+    end
+
+    def self.plugin_installed?(plugins)
+      plugins.detect{ |plugin| !Redmine::Plugin.installed?(plugin) }.nil?
     end
 
     # TODO: What should happen if
@@ -109,6 +102,7 @@ module Rys
     def initialize
       @_where = nil
       @_apply_if = nil
+      @_apply_if_plugins = []
       @_apply_only_once = false
       @_includeds = []
       @_instance_methods = []
@@ -119,6 +113,7 @@ module Rys
       {
         where: @_where,
         apply_if: @_apply_if,
+        apply_if_plugins: @_apply_if_plugins,
         apply_only_once: @_apply_only_once,
         includeds: @_includeds,
         instance_methods: @_instance_methods,
@@ -154,6 +149,10 @@ module Rys
 
     def included(&block)
       @_includeds << block
+    end
+
+    def apply_if_plugins(value)
+      @_apply_if_plugins = Array.wrap(value)
     end
 
     def instance_methods(**options, &block)
@@ -199,6 +198,10 @@ module Rys
 
     def apply_only_once
       result[:apply_only_once]
+    end
+
+    def apply_if_plugins
+      result[:apply_if_plugins]
     end
 
     def apply_if

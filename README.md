@@ -154,6 +154,8 @@ Rys::Patcher.add(CLASS_TO_PATCH) do
   apply_if do
     CONDITION
   end
+    
+  apply_if_plugins :easy_crm_cases # Verifies whether the plugin is installed
 
   included do
     # This section is evaluated in CLASS_TO_PATCH
