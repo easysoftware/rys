@@ -1,7 +1,8 @@
-git_source(:easy_git){ |name| "git@git.easy.cz:platform-2.0/#{name}.git" }
+git_source(:easy){ |name| "git@git.easy.cz:#{name}.git" }
+git_source(:github) { |name| "https://github.com/#{name}.git" }
 
 group :default, :rys do
-  # gem 'rys', easy_git: 'rys', branch: 'master'
+  # gem 'rys', github: 'easysoftware/rys', branch: 'master'
 end
 
 this_dir = Pathname.new(__dir__)
