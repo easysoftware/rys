@@ -154,7 +154,7 @@ Rys::Patcher.add(CLASS_TO_PATCH) do
   apply_if do
     CONDITION
   end
-    
+
   apply_if_plugins :easy_crm_cases # Verifies whether the plugin is installed
 
   included do
@@ -225,7 +225,7 @@ rails generate rys:scaffold RYS_PLUGIN_NAME ...normal arguments...
 rails generate rys:controller RYS_PLUGIN_NAME ...normal arguments...
 ```
 
-### TESTS
+# TESTS
 
 Tests requires gem [ryspec](https://github.com/easysoftware/ryspec)
 
@@ -234,4 +234,8 @@ Tests requires gem [ryspec](https://github.com/easysoftware/ryspec)
   3. In RYS plugin run `rake app:db:migrate` follow by `rake app:db:test:prepare`
   4. Feel free tu run `rspec`
 
+# Migrations
 
+All migrations from db/migrate are run via `rake db:migrate`
+
+If you want migrations after `rake redmine:plugins:migrate` put migration into db/after_plugins.

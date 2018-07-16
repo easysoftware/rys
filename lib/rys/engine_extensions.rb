@@ -28,6 +28,9 @@ module Rys
         app.config.railties_order.unshift(base)
       end
 
+      # Just register path for rys/tasks/migration.rake
+      base.config.paths.add('db/after_plugins')
+
       # To prepend view path after Redmine and plugins
       base.move_initializer(:add_view_paths, after: :load_config_initializers)
     end
