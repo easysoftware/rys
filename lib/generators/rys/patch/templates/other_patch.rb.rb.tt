@@ -1,5 +1,10 @@
 Rys::Patcher.add('<%= name_camelize %>') do
 
+  # apply_if_plugins verifies whether the plugin is installed
+  # Example: apply_if_plugins :easy_invoice, :easy_crm_cases
+  #
+  # apply_if_plugins
+
   # This patch will be applied only on start
   #
   apply_only_once!
