@@ -12,5 +12,5 @@ all_gemspecs.each do |gemspec|
   gem gemspec.basename.sub('.gemspec', '').to_s, path: gemspec.dirname, groups: [:rys, :default]
 end
 
-plugin 'rys-bundler', easy_git: 'rys-bundler', branch: 'master'
+plugin 'rys-bundler', github: 'easysoftware/rys', branch: 'master'
 Plugin.hook('rys-gemfile', self)
