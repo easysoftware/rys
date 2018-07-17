@@ -7,6 +7,7 @@ namespace :rys do
         version = ENV['VERSION'].presence
         existent_dirs = plugin.paths['db/after_plugins'].existent
 
+        puts "Migrating #{plugin} after_plugins ..."
         ActiveRecord::Migrator.migrate(existent_dirs, version)
       end
     end
