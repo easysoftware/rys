@@ -7,4 +7,5 @@ module Rys
   autoload :EngineExtensions,   'rys/engine_extensions'
   autoload :PluginsManagement,  'rys/plugins_management'
   autoload :PatchGeneratorBase, 'rys/patch_generator_base'
+  autoload :Hook,               'rys/hook'
 end
