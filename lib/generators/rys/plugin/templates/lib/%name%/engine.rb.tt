@@ -4,6 +4,8 @@ module <%= camelized %>
   class Engine < ::Rails::Engine
     include Rys::EngineExtensions
 
+    rys_id '<%= name %>'
+
     initializer '<%= name %>.setup' do
       # Custom initializer
     end

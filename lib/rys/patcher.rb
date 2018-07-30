@@ -53,7 +53,7 @@ module Rys
     end
 
     def self.plugin_installed?(plugins)
-      plugins.detect{ |plugin| !Redmine::Plugin.installed?(plugin) }.nil?
+      plugins.all?{ |plugin| Redmine::Plugin.installed?(plugin) }
     end
 
     # TODO: What should happen if

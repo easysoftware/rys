@@ -7,11 +7,21 @@ module Rys
     mattr_accessor :all_features
     self.all_features = {}
 
-    attr_reader :key, :full_key, :parent, :children
+    mattr_accessor :plugins_stack
+    self.plugins_stack = []
+
+    attr_reader :key, :full_key, :parent, :children, :plugins
     attr_accessor :block_condition, :options
 
     def self.root
       Rys::RootFeature.instance
+    end
+
+    def self.for_plugin(plugin)
+      plugins_stack.push(plugin)
+      yield
+    ensure
+      plugins_stack.pop
     end
 
     def self.add(key, **options, &block_condition)
@@ -19,6 +29,7 @@ module Rys
         feature = root.fetch_or_create(key)
         feature.block_condition = block_condition
         feature.options = options
+        feature.add_plugins(plugins_stack)
         feature
       }
     end
@@ -56,6 +67,7 @@ module Rys
       @parent = parent
       @block_condition = nil
       @options = {}
+      @plugins = []
 
       @full_key = parent.root? ? key : "#{parent.full_key}.#{key}"
       @children = {}
@@ -94,6 +106,18 @@ module Rys
         block_condition.call && parent.active?
       else
         RysFeatureRecord.active?(full_key) && parent.active?
+      end
+    end
+
+    def add_plugins(plugins)
+      plugins = Array(plugins)
+      @plugins.concat(plugins)
+      @plugins.uniq!
+
+      if parent.root?
+        # Root belongs to anyone
+      else
+        parent.add_plugins(plugins)
       end
     end
 
