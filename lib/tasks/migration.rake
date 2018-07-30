@@ -45,8 +45,12 @@ namespace :redmine do
     #   - Rails tasks
     #
     task :migrate do
-      Rake::Task['redmine:plugins:migrate'].enhance do
-        Rake::Task['rys:migrate:after_plugins'].invoke
+      if defined?(APP_RAKEFILE) && defined?(ENGINE_PATH)
+        prefix = 'app:'
+      end
+
+      Rake::Task["#{prefix}redmine:plugins:migrate"].enhance do
+        Rake::Task["#{prefix}rys:migrate:after_plugins"].invoke
       end
     end
 
