@@ -54,21 +54,11 @@ module Rys
       RysFeatureRecord.migrate_new
     end
 
-    initializer 'rys.menu_manager' do
-      Redmine::MenuManager.map :admin_menu do |menu|
-        menu.push :rys_features, :rys_features_path,
-          if: proc { User.current.admin? },
-          html: { class: 'icon icon-package' },
-          last: true
-      end
-    end
-
     # For patches where you set
     #   where :earlier_to_prepare
     #
     # Useful when you nedd something before loading easy plugins
-    reloader_klass = defined?(ActiveSupport::Reloader) ? ActiveSupport::Reloader : ActionDispatch::Reloader
-    reloader_klass.to_prepare do
+    Rys::Reloader.to_prepare do
       Rys::Patcher.apply(where: :earlier_to_prepare)
     end
 

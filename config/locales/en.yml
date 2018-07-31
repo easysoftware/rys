@@ -1,5 +1,4 @@
 en:
   rys:
     features: Features
-    activate: Activate
-    deactivate: Deactivate
+    rys_plugins: Rys plugins

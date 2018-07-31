@@ -3,6 +3,7 @@ module Rys
 
     def self.included(base)
       base.extend(ClassMethods)
+      base.parent.extend(ParentClassMethods)
 
       Rys::PluginsManagement.add(base)
 
@@ -113,6 +114,21 @@ module Rys
       #
       def move_initializer(name, before: nil, after: nil)
         initializers_moves << { name: name, before: before, after: after }
+      end
+
+      # Be careful for changing the name
+      # For example language prefix depends on this
+      def rys_id(name=nil)
+        @rys_id = name.to_s if name
+        @rys_id ||= ActiveSupport::Inflector.underscore(self.name).sub('/engine', '')
+      end
+
+    end
+
+    module ParentClassMethods
+
+      def engine
+        @engine ||= self.const_get(:Engine)
       end
 
     end
