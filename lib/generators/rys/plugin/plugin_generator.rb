@@ -132,7 +132,7 @@ module Rys
     end
 
     def after_generated
-      Rys::Hook.('rys.plugin_generator.after_generated', self)
+      Rys::Hook.call('rys.plugin_generator.after_generated', self)
     end
 
     def init_git
