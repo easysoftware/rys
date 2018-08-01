@@ -1,5 +1,5 @@
-git_source(:easy){ |name| "git@git.easy.cz:#{name}.git" }
-git_source(:github) { |name| "https://github.com/#{name}.git" }
+git_source(:github) {|name| "https://github.com/#{name}.git" }
+git_source(:easy) {|name| "git@git.easy.cz:#{name}.git" }
 
 group :default, :rys do
   # gem 'rys', github: 'easysoftware/rys', branch: 'master'
