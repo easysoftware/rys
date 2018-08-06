@@ -19,19 +19,19 @@
 #   # Project level
 #
 #   map.project_module :<%= name %> do |pmap|
-#     map.rys_feature('<%= name %>') do |fmap|
-#       # View on project
 #
-#       fmap.permission(:view_<%= name %>, {
-#         <%= name %>: [:index, :show]
-#       }, read: true)
+#     # View on project
 #
-#       # Edit on project
+#     pmap.permission(:view_<%= name %>, {
+#       <%= name %>: [:index, :show]
+#     }, read: true)
 #
-#       fmap.permission(:manage_<%= name %>, {
-#         <%= name %>: [:new, :create, :edit, :update, :destroy]
-#       }, require: :loggedin)
-#     end
+#     # Edit on project
+#
+#     pmap.permission(:manage_<%= name %>, {
+#       <%= name %>: [:new, :create, :edit, :update, :destroy]
+#     }, require: :loggedin)
+#
 #   end
 #
 # end
