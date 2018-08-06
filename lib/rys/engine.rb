@@ -1,5 +1,6 @@
 module Rys
   class Engine < ::Rails::Engine
+    Rys::Patcher.paths << root.join('patches')
 
     config.generators do |g|
       g.test_framework :rspec, fixture: false
@@ -38,6 +39,10 @@ module Rys
         Rys::Patcher.apply
         Rys::Patcher.applied_count += 1
       end
+    end
+
+    initializer 'rys.access_control', before: :load_config_initializers do
+      require 'rys/access_control'
     end
 
     initializer 'rys.features' do |app|
