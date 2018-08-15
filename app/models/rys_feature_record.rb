@@ -2,6 +2,23 @@ class RysFeatureRecord < ActiveRecord::Base
   self.table_name = 'rys_features'
 
   scope :registered, proc { where(name: Rys::Feature.all_features.keys) }
+  scope :registered_for, lambda { |plugin|
+    features = []
+
+    Rys::Feature.all_features.each do |_, feature|
+      if plugin.nil?
+        if feature.plugins.size == 0
+          features << feature
+        end
+      else
+        if feature.plugins.include?(plugin)
+          features << feature
+        end
+      end
+    end
+
+    where(name: features.map(&:full_key))
+  }
 
   after_commit :update_callback, on: :update
 
