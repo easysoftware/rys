@@ -3,6 +3,8 @@ git_source(:easy) {|name| "git@git.easy.cz:#{name}.git" }
 
 group :default, :rys do
   # gem 'rys', github: 'easysoftware/rys', branch: 'master'
+  # gem 'ryspec', github: 'easysoftware/ryspec', branch: 'master'
+  # gem 'rys_management', github: 'easysoftware/rys_management', branch: 'master'
 end
 
 this_dir = Pathname.new(__dir__)
