@@ -10,6 +10,8 @@ namespace :rys do
         puts "Migrating #{plugin} after_plugins ..."
         ActiveRecord::Migrator.migrate(existent_dirs, version)
       end
+
+      Rake::Task["db:schema:dump"].invoke
     end
 
   end
