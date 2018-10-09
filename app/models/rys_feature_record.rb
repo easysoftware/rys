@@ -31,6 +31,7 @@ class RysFeatureRecord < ActiveRecord::Base
     unsaved_names.each do |name|
       create!(name: name, active: true)
     end
+  rescue ActiveRecord::NoDatabaseError
   end
 
   def self.request_store
