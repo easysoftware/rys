@@ -20,21 +20,15 @@ variables:
 # https://docs.gitlab.com/ee/ci/yaml/#jobs
 Me:
   stage: ryses
-  tags:
-  - postgresql
   script:
   - ruby $TESTER rys test_me --adapter postgresql
 
 Ryses:
   stage: ryses
-  tags:
-  - postgresql
   script:
   - ruby $TESTER rys test_all_ryses --adapter postgresql
 
 App:
   stage: platform
-  tags:
-  - postgresql
   script:
   - ruby $TESTER rys test_main_app --adapter postgresql
