@@ -11,6 +11,7 @@ namespace :rys do
         ActiveRecord::Migrator.migrate(existent_dirs, version)
       end
 
+      Rake::Task["db:schema:dump"].reenable
       Rake::Task["db:schema:dump"].invoke
     end
 
