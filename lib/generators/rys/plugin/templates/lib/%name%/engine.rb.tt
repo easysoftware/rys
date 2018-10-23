@@ -6,6 +6,11 @@ module <%= camelized %>
 
     rys_id '<%= name %>'
 
+    # rys_config {
+    #   # System rys
+    #   # system!
+    # }
+
     initializer '<%= name %>.setup' do
       # Custom initializer
     end
