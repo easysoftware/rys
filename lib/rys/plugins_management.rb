@@ -9,11 +9,17 @@ module Rys
       instance.add(engine_klass)
     end
 
-    def self.all(delegate_with: nil)
+    # @param delegate_with [Delegator] Wrap plugin with this delegator
+    # @param systemic [true, false] Returns also systemic ryses
+    def self.all(delegate_with: nil, systemic: false)
+      plugins = instance.plugins
+
+      if !systemic
+        plugins.select! {|p| !p.parent.config.systemic }
+      end
+
       if delegate_with
-        plugins = instance.plugins.map{|p| delegate_with.new(p) }
-      else
-        plugins = instance.plugins
+        plugins.map!{|p| delegate_with.new(p) }
       end
 
       if block_given?
