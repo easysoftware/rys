@@ -7,7 +7,6 @@ module Rys
   autoload :Reloader,           'rys/reloader'
   autoload :Hook,               'rys/hook'
   autoload :Utils,              'rys/utils'
-  autoload :Config,             'rys/config'
 
   def self.utils
     Utils

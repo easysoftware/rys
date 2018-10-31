@@ -124,14 +124,6 @@ module Rys
         @rys_id ||= ActiveSupport::Inflector.underscore(self.name).sub('/engine', '')
       end
 
-      def rys_config(&block)
-        if block
-          @rys_config = Rys::Config.from_dsl(&block)
-        end
-
-        @rys_config ||= Rys::Config.new
-      end
-
     end
 
     module ParentClassMethods
