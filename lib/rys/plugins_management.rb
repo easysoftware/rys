@@ -15,7 +15,7 @@ module Rys
       plugins = instance.plugins
 
       if !systemic
-        plugins.select! {|p| !p.rys_config.systemic }
+        plugins.select! {|p| !p.parent.config.systemic }
       end
 
       if delegate_with
