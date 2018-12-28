@@ -10,7 +10,6 @@ module Rys
 
     def gemfile
       template 'gems.rb'
-      template 'dependencies.rb'
     end
 
     def config
