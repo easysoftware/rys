@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
 
   s.metadata['allowed_push_host'] = 'https://gems.easysoftware.com'
 
-  s.files = Dir['{app,config,db,lib,patches}/**/*', 'Rakefile', 'README.md', 'gems.rb']
+  s.files = Dir['{app,config,db,lib,patches}/**/{*,.*}', 'Rakefile', 'README.md', 'gems.rb']
   s.test_files = Dir['test/**/*', 'spec/**/*']
 
   s.add_dependency 'request_store'
