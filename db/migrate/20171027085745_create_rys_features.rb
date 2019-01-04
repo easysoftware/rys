@@ -1,4 +1,4 @@
-class CreateRysFeatures < ActiveRecord::Migration
+class CreateRysFeatures < RedmineExtensions::Migration
 
   def change
     create_table :rys_features, force: true do |t|

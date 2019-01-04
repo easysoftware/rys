@@ -8,7 +8,11 @@ namespace :rys do
         existent_dirs = plugin.paths['db/after_plugins'].existent
 
         puts "Migrating #{plugin} after_plugins ..."
-        ActiveRecord::Migrator.migrate(existent_dirs, version)
+        if Rys.utils.rails5?
+          ActiveRecord::MigrationContext.new(existent_dirs).migrate(version)
+        else
+          ActiveRecord::Migrator.migrate(existent_dirs, version)
+        end
       end
 
       Rake::Task["db:schema:dump"].reenable

@@ -19,4 +19,5 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'request_store'
   s.add_dependency 'tty-prompt'
+  s.add_dependency 'redmine_extensions'
 end
