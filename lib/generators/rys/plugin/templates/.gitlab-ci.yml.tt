@@ -3,6 +3,7 @@
 stages:
   - ryses
   - platform
+  - release
 
 # Used to define the command that should be run before all jobs, including deploy jobs.
 # https://docs.gitlab.com/ee/ci/yaml/#before_script-and-after_script
@@ -21,14 +22,21 @@ variables:
 Me:
   stage: ryses
   script:
-  - ruby $TESTER rys test_me --adapter postgresql
+    - ruby $TESTER rys test_me --adapter postgresql
 
 Ryses:
   stage: ryses
   script:
-  - ruby $TESTER rys test_all_ryses --adapter postgresql
+    - ruby $TESTER rys test_all_ryses --adapter postgresql
 
 App:
   stage: platform
   script:
-  - ruby $TESTER rys test_main_app --adapter postgresql
+    - ruby $TESTER rys test_main_app --adapter postgresql
+
+Release:
+  stage: release
+  only:
+    - master
+  script:
+    - ruby $TESTER release_gem release
