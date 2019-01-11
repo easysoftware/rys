@@ -5,7 +5,7 @@ source 'https://gems.easysoftware.com'
 possible_app_dirs = [
   ENV['DUMMY_PATH'],
   File.join(Dir.pwd, 'test/dummy'),
-  Bundler.root.join('test/dummy'),
+  Bundler.root.join('test/dummy')
 ]
 
 # Find first gemfile on the possible directories
@@ -16,18 +16,18 @@ possible_app_dirs.each do |dir|
   next if !dir
   next if !Dir.exist?(dir)
 
-  ['Gemfile', 'gems.rb'].each do |gems_rb|
+  %w[Gemfile gems.rb].each do |gems_rb|
     gems_rb = File.expand_path(File.join(dir, gems_rb))
 
-    if File.exist?(gems_rb)
-      eval_gemfile(gems_rb)
-      gems_rb_found = true
-      break
-    end
+    next unless File.exist?(gems_rb)
+
+    eval_gemfile(gems_rb)
+    gems_rb_found = true
+    break
   end
 end
 
-if !gems_rb_found
+unless gems_rb_found
   abort("Dummy application's gemfile not found")
 end
 
