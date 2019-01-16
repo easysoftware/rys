@@ -137,6 +137,10 @@ module Rys
       options[:status_changed]&.(active)
     end
 
+    def default_db_status
+      options[:default_db_status].nil? ? true : options[:default_db_status]
+    end
+
     private
 
       def translate_it(field, value)
