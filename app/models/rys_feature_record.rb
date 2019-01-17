@@ -26,10 +26,11 @@ class RysFeatureRecord < ActiveRecord::Base
     return unless table_exists?
 
     saved_names = pluck(:name)
-    unsaved_names = Rys::Feature.all_features.keys - saved_names
 
-    unsaved_names.each do |name|
-      create!(name: name, active: true)
+    features = Rys::Feature.all_features
+    features.each do |name, feature|
+      next if saved_names.include?(name)
+      create!(name: name, active: feature.default_db_status)
     end
   rescue ActiveRecord::NoDatabaseError
   end
