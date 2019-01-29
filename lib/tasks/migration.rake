@@ -52,7 +52,7 @@ namespace :redmine do
     #   - Rails tasks
     #
     task :migrate do
-      if defined?(APP_RAKEFILE) && defined?(ENGINE_PATH)
+      if defined?(APP_RAKEFILE) && (defined?(ENGINE_PATH) || defined?(ENGINE_ROOT))
         prefix = 'app:'
       end
 
