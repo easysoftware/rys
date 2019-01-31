@@ -15,7 +15,7 @@ module Rys
       base.initializers_moves = []
 
       base.initializer :append_migrations do |app|
-        if defined?(ENGINE_PATH) && base.root.to_s == ENGINE_PATH
+        if defined?(ENGINE_ROOT) && base.root.to_s == ENGINE_ROOT
           # Rails is loaded through this engine
           # and migrations are automatically added
         else
