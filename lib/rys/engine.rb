@@ -48,7 +48,7 @@ module Rys
     end
 
     initializer 'rys.features' do |app|
-      if defined?(ENGINE_PATH) && root.to_s == ENGINE_PATH
+      if app.root.to_s != root.to_s
         # Rails is loaded through this engine
         # and migrations are automatically added
       else
