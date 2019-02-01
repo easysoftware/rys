@@ -1,6 +1,7 @@
 /.bundle
 .idea/
 /spec/dummy
-/Gemfile.lock
+/test/dummy
 /redmine.tar.gz
 Gemfile.lock
+gems.locked
