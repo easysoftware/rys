@@ -53,6 +53,10 @@ class RysFeatureRecord < ActiveRecord::Base
     RysFeatureRecord.where(name: full_keys).update_all(active: true)
   end
 
+  def self.mutli_find(value)
+    value.present? && (find_by(id: value) || find_by(name: value))
+  end
+
   def feature
     Rys::Feature.all_features[name]
   end
@@ -61,7 +65,7 @@ class RysFeatureRecord < ActiveRecord::Base
 
     def update_callback
       if previous_changes.has_key?(:active)
-        feature.status_changed(active)
+        feature&.status_changed(active)
       end
     end
 
