@@ -1,0 +1,6 @@
+# Assets definitions
+# https://guides.rubyonrails.org/asset_pipeline.html
+#
+# Rails.application.configure do
+#   config.assets.precompile << "<%= name %>/<%= name %>.js"
+# end
