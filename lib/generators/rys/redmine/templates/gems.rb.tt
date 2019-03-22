@@ -14,5 +14,14 @@ all_gemspecs.each do |gemspec|
   gem gemspec.basename.sub('.gemspec', '').to_s, path: gemspec.dirname, groups: [:rys, :default]
 end
 
-plugin 'rys-bundler', github: 'easysoftware/rys', branch: 'master'
-Plugin.hook('rys-gemfile', self)
+plugin 'rys-bundler', github: 'easysoftware/rys-bundler', branch: 'master'
+
+# Because of bundler >= 1.17
+if !is_a?(Plugin::DSL)
+  if defined?(Bundler::Plugin::Events)
+    Bundler::Plugin::Events.send(:define, :RYS_GEMFILE, 'rys-gemfile')
+  end
+
+  Plugin.hook('rys-gemfile', self)
+end
+
