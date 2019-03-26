@@ -1,5 +1,7 @@
 Rys::Patcher.add('IssuesController') do
 
+  # apply_if_plugins :easy_extensions
+
   included do
     before_action :<%= name %>_add_flash_notice, only: [:show]
   end
@@ -15,11 +17,11 @@ Rys::Patcher.add('IssuesController') do
 
     private
 
-      def <%= name %>_add_flash_notice
-        if Rys::Feature.active?('<%= name %>.issue.show', '<%= name %>.project.show')
-          flash.now[:notice] = 'Features are activated'
-        end
+    def <%= name %>_add_flash_notice
+      if Rys::Feature.active?('<%= name %>.issue.show', '<%= name %>.project.show')
+        flash.now[:notice] = 'Features are activated'
       end
+    end
   end
 
 

@@ -1,5 +1,7 @@
 Rys::Patcher.add('Project') do
 
+  apply_if_plugins :easy_extensions
+
   included do
     # has_many :things
 
@@ -10,9 +12,9 @@ Rys::Patcher.add('Project') do
 
     private
 
-      def <%= name %>_ensure_something
-        puts 'Features are activated'
-      end
+    def <%= name %>_ensure_something
+      puts 'Features are activated'
+    end
 
   end
 

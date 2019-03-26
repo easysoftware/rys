@@ -1,10 +1,40 @@
 # <%= camelized %>
 
+[![coverage report](https://git.easy.cz/platform-2.0/features/<%= name %>/badges/master/coverage.svg)](https://git.easy.cz/platform-2.0/features/<%= name %>/commits/master)
+
+## How to install
+
+Add to your Gemfile or gems.rb
+
+    source 'https://gems.easysoftware.com' do
+      gem 'easy_gems'
+    end
+
 ## Development
+
+Please follow our [Guidelines](https://git.easy.cz/external/guidelines/wikis/home)
+
+### Preparation
+
+    1. Symlink dummy app to `test/dummy`
+    2. run `bundle install --without rmagick`
+    3. run `rake app:easyproject:install` for migration
+
+### Development
+
+#### - New way
+
+In your favorite IDE or editor open this folder as a new project.
+
+Run console, server or rspec from this folder
+
+#### - Old way
+
+In your dummy application:
 
 ##### By path (default)
 
-Into gem file
+Into Gemfile file
 
     gem '<%= name %>', path: PLUGIN_PATH
 
