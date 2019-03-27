@@ -17,11 +17,11 @@ Rys::Patcher.add('IssuesController') do
 
     private
 
-    def <%= name %>_add_flash_notice
-      if Rys::Feature.active?('<%= name %>.issue.show', '<%= name %>.project.show')
-        flash.now[:notice] = 'Features are activated'
+      def <%= name %>_add_flash_notice
+        if Rys::Feature.active?('<%= name %>.issue.show', '<%= name %>.project.show')
+          flash.now[:notice] = 'Features are activated'
+        end
       end
-    end
   end
 
 

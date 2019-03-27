@@ -1,61 +1,45 @@
 # <%= camelized %>
 
+<!--
+  -- Replace for true repository location
+  --
 [![coverage report](https://git.easy.cz/platform-2.0/features/<%= name %>/badges/master/coverage.svg)](https://git.easy.cz/platform-2.0/features/<%= name %>/commits/master)
+  --
+-->
 
 ## How to install
 
 Add to your Gemfile or gems.rb
 
-    source 'https://gems.easysoftware.com' do
-      gem 'easy_gems'
-    end
+```ruby
+# From gems server
+source 'https://gems.easysoftware.com' do
+  gem '<%= name %>'
+end
+
+# From git server
+gem '<%= name %>', git: 'git@git.easy.cz:gems/<%= name %>', branch: 'master'
+```
 
 ## Development
 
 Please follow our [Guidelines](https://git.easy.cz/external/guidelines/wikis/home)
 
-### Preparation
+### 1) From the platform gemfile
 
-    1. Symlink dummy app to `test/dummy`
-    2. run `bundle install --without rmagick`
-    3. run `rake app:easyproject:install` for migration
+1. Open gemfile (e.g: APP_ROOT/Gemfile.local)
+2. Add `gem '<%= name %>', path: GENERATED_RYS_LOCATION`
+3. Run `bundle install`
+4. Run the server and develop
 
-### Development
+### 2) Link to redmine plugin
 
-#### - New way
+1. Make a symlink into `plugins/easysoftware/local`
+2. Run `bundle install`
+3. Run the server and develop
 
-In your favorite IDE or editor open this folder as a new project.
+### 3) From generated rys itself
 
-Run console, server or rspec from this folder
-
-#### - Old way
-
-In your dummy application:
-
-##### By path (default)
-
-Into Gemfile file
-
-    gem '<%= name %>', path: PLUGIN_PATH
-
-
-##### By git
-
-Into gem file
-
-    gem '<%= name %>', git: 'git@git.cz:plugins/<%= name %>.git'
-
-Into shell
-
-    bundle config local.<%= name %> PLUGIN_PATH
-
-
-##### By redmine plugin
-
-Ensure you have redmine plugin for rys plugins
-
-    rails generate rys:redmine:plugin REDMINE_PLUGIN
-
-Move plugin
-
-    mv PLUGIN_PATH REDMINE_PLUGIN/local
+1. Symlink the platform (dummy app) into `test/dummy`
+2. Run `bundle install`
+3. Run the server and develop

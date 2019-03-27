@@ -4,6 +4,14 @@ require 'rails/generators/rails/plugin/plugin_generator'
 module Rys
   class PluginBuilder < ::Rails::PluginBuilder
 
+    def rubocop
+      template '.rubocop.yml'
+    end
+
+    def changelog
+      template 'CHANGELOG.md'
+    end
+
     def readme
       template 'README.md'
     end
@@ -91,6 +99,8 @@ module Rys
       build(:gemspec)
       build(:gitignore) unless options[:skip_git]
       build(:gemfile)
+      build(:rubocop)
+      build(:changelog)
       directory 'db'
       template '.gitlab-ci.yml'
       template '.rspec'
