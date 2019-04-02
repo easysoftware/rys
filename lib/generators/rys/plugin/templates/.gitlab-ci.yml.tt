@@ -23,6 +23,7 @@ Me:
   stage: ryses
   script:
     - ruby $TESTER rys test_me --adapter postgresql
+  coverage: '/\(\d+.\d+\%\) covered/'
 
 Ryses:
   stage: ryses
@@ -40,3 +41,4 @@ Release:
     - master
   script:
     - ruby $TESTER release_gem release
+  allow_failure: true
