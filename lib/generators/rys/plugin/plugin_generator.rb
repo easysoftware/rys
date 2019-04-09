@@ -44,6 +44,9 @@ module Rys
 
     class_option :path, type: :string
 
+    class_option :rys_author, type: :string,
+                              desc: 'The author of the Rys'
+
     self.source_paths << source_root
     self.source_paths << Rails::Generators::PluginGenerator.source_root
 
@@ -165,6 +168,12 @@ module Rys
         shell.say_status 'INFO', %{"#{line.chomp}"}
       end
     end
+
+    private
+
+      def author
+        options['rys_author'].presence || super
+      end
 
   end
 end
