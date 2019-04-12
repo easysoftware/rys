@@ -1,8 +1,0 @@
-AllCops:
-  DisabledByDefault: true
-
-Layout:
-  Enabled: true
-
-Layout/IndentationConsistency:
-  EnforcedStyle: rails

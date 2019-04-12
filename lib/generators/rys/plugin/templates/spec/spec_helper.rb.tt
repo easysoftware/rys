@@ -1,4 +1,8 @@
 require 'bundler'
+require 'simplecov'
+SimpleCov.start do
+  add_filter 'lib/<%= <%= name %> %>/version'
+end
 
 spec = Bundler.load.specs.find{|s| s.name.to_s == 'ryspec' }
 
