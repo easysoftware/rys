@@ -3,6 +3,7 @@
 stages:
   - ryses
   - platform
+  - platform_features
   - release
 
 # Used to define the command that should be run before all jobs, including deploy jobs.
@@ -30,8 +31,53 @@ Ryses:
   script:
     - ruby $TESTER rys test_all_ryses --adapter postgresql
 
-App:
+
+App / model:
   stage: platform
+  variables:
+    TAGS: "type:model"
+  script:
+    - ruby $TESTER rys test_main_app --adapter postgresql
+App / request:
+  stage: platform
+  variables:
+    TAGS: "type:request"
+  script:
+    - ruby $TESTER rys test_main_app --adapter postgresql
+App / controller:
+  stage: platform
+  variables:
+    TAGS: "type:controller"
+  script:
+    - ruby $TESTER rys test_main_app --adapter postgresql
+App / features:
+  stage: platform_features
+  variables:
+    TAGS: "js"
+  script:
+    - ruby $TESTER rys test_main_app --adapter postgresql
+App / mailer:
+  stage: platform
+  variables:
+    TAGS: "type:mailer"
+  script:
+    - ruby $TESTER rys test_main_app --adapter postgresql
+App / job:
+  stage: platform
+  variables:
+    TAGS: "type:job"
+  script:
+    - ruby $TESTER rys test_main_app --adapter postgresql
+App / view:
+  stage: platform
+  variables:
+    TAGS: "type:view"
+  script:
+    - ruby $TESTER rys test_main_app --adapter postgresql
+App / helper:
+  stage: platform
+  variables:
+    TAGS: "type:helper"
   script:
     - ruby $TESTER rys test_main_app --adapter postgresql
 
