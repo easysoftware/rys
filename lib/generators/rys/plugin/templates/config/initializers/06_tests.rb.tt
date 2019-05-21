@@ -1,9 +1,9 @@
 # Tests configuration
 # - Allowed failures
 #
-# if Rails.env.test?
+# if Rails.env.test? && Redmine::Plugin.installed?(:easy_extensions)
 #   extensions_skipped = [
 #     'MyNewController #my_new_action',
 #   ]
-#   EasyExtensions::Tests::AllowedFailures.register(extensions_skipped) if Redmine::Plugin.installed?(:easy_extensions)
+#   EasyExtensions::Tests::AllowedFailures.register(extensions_skipped)
 # end
