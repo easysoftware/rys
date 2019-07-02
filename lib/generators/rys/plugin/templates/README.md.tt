@@ -25,6 +25,8 @@ gem '<%= name %>', git: 'git@git.easy.cz:gems/<%= name %>', branch: 'master'
 
 Please follow our [Guidelines](https://git.easy.cz/external/guidelines/wikis/home)
 
+For full feature list of RYS see [RYS wiki](https://github.com/easysoftware/rys/wiki)
+
 ### 1) From the platform gemfile
 
 1. Open gemfile (e.g: APP_ROOT/Gemfile.local)
