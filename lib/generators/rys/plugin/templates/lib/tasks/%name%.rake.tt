@@ -3,7 +3,7 @@ begin
 
   namespace :<%= name %> do
     desc 'Runs rspec tests'
-    RSpec::Core::RakeTask.new(:spec) do |task, task_args|
+    RSpec::Core::RakeTask.new(:spec) do |task, _task_args|
       args = []
       args << '--require' << Ryspec::Engine.root.join('spec/spec_helper')
 

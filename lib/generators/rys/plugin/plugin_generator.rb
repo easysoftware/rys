@@ -45,7 +45,7 @@ module Rys
     class_option :path, type: :string
 
     class_option :rys_author, type: :string,
-                              desc: 'The author of the Rys'
+                 desc: 'The author of the Rys'
 
     self.source_paths << source_root
     self.source_paths << Rails::Generators::PluginGenerator.source_root
@@ -115,6 +115,7 @@ module Rys
 
     def create_test_files
       directory 'spec'
+      directory 'test'
     end
 
     def create_view_example
@@ -171,9 +172,9 @@ module Rys
 
     private
 
-      def author
-        options['rys_author'].presence || super
-      end
+    def author
+      options['rys_author'].presence || super
+    end
 
   end
 end

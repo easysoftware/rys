@@ -1,5 +1,4 @@
 Rys::Patcher.add('Project') do
-
   apply_if_plugins :easy_extensions
 
   included do
@@ -9,12 +8,11 @@ Rys::Patcher.add('Project') do
   end
 
   instance_methods do
-
     private
 
-      def <%= name %>_ensure_something
-        puts 'Features are activated'
-      end
+    def <%= name %>_ensure_something
+      puts 'Features are activated'
+    end
 
   end
 
@@ -26,5 +24,4 @@ Rys::Patcher.add('Project') do
 
   class_methods do
   end
-
 end

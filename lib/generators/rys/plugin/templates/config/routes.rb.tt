@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   # Usually definition
   #
   # get '<%= name %>_issue_1', to: 'issues#index'
@@ -13,5 +12,4 @@ Rails.application.routes.draw do
   # rys_feature '<%= name %>.issue' do
   #   get '<%= name %>_issues_3', to: 'issues#index'
   # end
-
 end
