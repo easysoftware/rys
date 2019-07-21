@@ -13,5 +13,7 @@ module Rys
   end
 end
 
+require 'redmine_extensions'
+require 'rys_management'
 require 'rys/engine'
 require 'rys/featured_routes'
