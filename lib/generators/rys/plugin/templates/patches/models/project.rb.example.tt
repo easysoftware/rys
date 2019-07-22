@@ -10,9 +10,9 @@ Rys::Patcher.add('Project') do
   instance_methods do
     private
 
-    def <%= name %>_ensure_something
-      puts 'Features are activated'
-    end
+      def <%= name %>_ensure_something
+        puts 'Features are activated'
+      end
 
   end
 

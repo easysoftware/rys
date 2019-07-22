@@ -172,9 +172,9 @@ module Rys
 
     private
 
-    def author
-      options['rys_author'].presence || super
-    end
+      def author
+        options['rys_author'].presence || super
+      end
 
   end
 end
