@@ -17,7 +17,7 @@ module Rys
     #
     def rys_feature(*names)
       original_rys_feature = @rys_feature
-      original_permissions = @permissions.dup
+      original_permissions = @permissions&.dup
 
       # An array must be rewrited
       @rys_feature = Array(@rys_feature) + names
