@@ -1,5 +1,4 @@
 Rys::Patcher.add('IssuesController') do
-
   # apply_if_plugins :easy_extensions
 
   included do
@@ -24,7 +23,6 @@ Rys::Patcher.add('IssuesController') do
       end
   end
 
-
   instance_methods(feature: '<%= name %>.issue.show') do
     def show
       @<%= name %>_test_2 = 'Test 2'
@@ -35,5 +33,4 @@ Rys::Patcher.add('IssuesController') do
 
   class_methods do
   end
-
 end

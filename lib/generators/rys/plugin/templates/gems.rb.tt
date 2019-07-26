@@ -42,7 +42,7 @@ end
 # Dummy application may already include this gem
 # You cannot specify the same gem twice
 current_gem_spec = Bundler.load_gemspec(gemspec_file)
-@dependencies.delete_if {|d| d.name == current_gem_spec.name }
+@dependencies.delete_if { |d| d.name == current_gem_spec.name }
 
 # Load current gem and its dependencies
 gemspec

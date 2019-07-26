@@ -14,8 +14,8 @@ Gem::Specification.new do |s|
 
   s.metadata['allowed_push_host'] = 'https://gems.easysoftware.com'
 
-  s.files = Dir['{app,config,db,lib,patches}/**/{*,.*}', 'Rakefile', 'README.md', 'gems.rb']
-  s.test_files = Dir['test/**/*', 'spec/**/*']
+  s.files = Dir['{app,config,db,lib,patches}/**/{*,.*}', 'Rakefile', 'README.md', 'gems.rb', '.rubocop.yml']
+  s.test_files = Dir['spec/**/*', 'test/.keep']
 
   s.add_dependency 'request_store'
   s.add_dependency 'tty-prompt'

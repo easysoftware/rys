@@ -1,5 +1,4 @@
 Rys::Patcher.add('String') do
-
   apply_only_once!
 
   apply_if do
@@ -16,5 +15,4 @@ Rys::Patcher.add('String') do
       end
     end
   end
-
 end
