@@ -67,7 +67,11 @@ module Rys
 
       if options[:feature]
         # Save original methods
-        method_list = mod.instance_methods.map{|m| [m, "#{m}_#{SecureRandom.hex}"] }
+        all_methods = []
+        all_methods.concat(mod.instance_methods)
+        all_methods.concat(mod.private_instance_methods)
+
+        method_list = all_methods.map{|m| [m, "#{m}_#{SecureRandom.hex}"] }
         method_list.each do |m, aliased_m|
           klass_to_patch.send(:alias_method, aliased_m, m)
         end
