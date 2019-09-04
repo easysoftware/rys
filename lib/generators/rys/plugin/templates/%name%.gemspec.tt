@@ -1,16 +1,16 @@
 # encoding: utf-8
 
 $LOAD_PATH.push File.expand_path('lib', __dir__)
-require '<%= name %>/version'
+require '<%= namespaced_name %>/version'
 
 Gem::Specification.new do |s|
   s.name        = '<%= name %>'
-  s.version     = <%= camelized %>::VERSION
+  s.version     = <%= camelized_modules %>::VERSION
   s.authors     = ['Easy Software', '<%= author %>']
   s.email       = ['info@easysoftware.com']
   s.homepage    = 'https://easysoftware.com'
-  s.summary     = 'Summary of <%= camelized %>.'
-  s.description = 'Description of <%= camelized %>.'
+  s.summary     = 'Summary of <%= camelized_modules %>.'
+  s.description = 'Description of <%= camelized_modules %>.'
   s.license     = 'GPL-2.0-or-later'
 
   s.metadata['allowed_push_host'] = 'https://gems.easysoftware.com'

@@ -5,31 +5,31 @@
 #
 #   # View on global
 #
-#   map.permission(:view_<%= name_pluralize %>, {
-#     <%= name %>: [:index, :show]
+#   map.permission(:view_<%= underscored_name_pluralize %>, {
+#     <%= underscored_name %>: [:index, :show]
 #   }, read: true, global: true)
 #
 #   # Manage on global
 #
-#   map.permission(:manage_<%= name_pluralize %>, {
-#     <%= name %>: [:new, :create, :edit, :update, :destroy]
+#   map.permission(:manage_<%= underscored_name_pluralize %>, {
+#     <%= underscored_name %>: [:new, :create, :edit, :update, :destroy]
 #   }, require: :loggedin, global: true)
 #
 #   # ---------------------------------------------------------------------------
 #   # Project level
 #
-#   map.project_module :<%= name %> do |pmap|
-#     map.rys_feature('<%= name %>') do |fmap|
+#   map.project_module :<%= underscored_name %> do |pmap|
+#     map.rys_feature('<%= underscored_name %>') do |fmap|
 #       # View on project
 #
-#       fmap.permission(:view_<%= name %>, {
-#         <%= name %>: [:index, :show]
+#       fmap.permission(:view_<%= underscored_name %>, {
+#         <%= underscored_name %>: [:index, :show]
 #       }, read: true)
 #
 #       # Edit on project
 #
-#       fmap.permission(:manage_<%= name %>, {
-#         <%= name %>: [:new, :create, :edit, :update, :destroy]
+#       fmap.permission(:manage_<%= underscored_name %>, {
+#         <%= underscored_name %>: [:new, :create, :edit, :update, :destroy]
 #       }, require: :loggedin)
 #     end
 #   end

@@ -1,7 +1,7 @@
 begin
   require 'rspec/core/rake_task'
 
-  namespace :<%= name %> do
+  namespace :<%= underscored_name %> do
     desc 'Runs rspec tests'
     RSpec::Core::RakeTask.new(:spec) do |task, _task_args|
       args = []

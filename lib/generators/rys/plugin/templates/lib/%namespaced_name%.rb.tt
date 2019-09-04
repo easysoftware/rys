@@ -1,43 +1,44 @@
 require 'rys'
 
-require '<%= name %>/version'
-require '<%= name %>/engine'
+require '<%= namespaced_name %>/version'
+require '<%= namespaced_name %>/engine'
 
-# == Configuration of <%= camelized %>
+# == Configuration of <%= camelized_modules %>
 # Static configuration stored in the memory
 #
 # @example Direct configuration
-#   <%= camelized %>.config.my_key = 1
+#   <%= camelized_modules %>.config.my_key = 1
 #
 # @example Configuration via block
-#   <%= camelized %>.configure do |c|
+#   <%= camelized_modules %>.configure do |c|
 #     c.my_key = 1
 #   end
 #
 # @example Getting a configuration
-#   <%= camelized %>.config.my_key
+#   <%= camelized_modules %>.config.my_key
 #
-# == Settings for <%= camelized %>
+# == Settings for <%= camelized_modules %>
 # Dynamic settings stored in the DB
 # Service methods are defined in the `rys_management`
 #
 # @example Getting
-#   <%= camelized %>.setting(:my_value)
+#   <%= camelized_modules %>.setting(:my_value)
 #
 #   # Direct
 #   EasySetting.value(:<%= name %>_my_value)
 #   EasySetting.find_by(name: '<%= name %>_my_value')
 #
 # @example Setting
-#   <%= camelized %>.set_setting(:my_value, VALUE)
+#   <%= camelized_modules %>.set_setting(:my_value, VALUE)
 #
-module <%= camelized %>
+<%= wrap_in_modules <<-rb.strip_heredoc
 
   # configure do |c|
-  #   c.my_key = 'This is my private config for <%= camelized %>'
+  #   c.my_key = 'This is my private config for #{camelized_modules}'
   #
   #   # System rys (not visible to the users)
   #   # c.systemic = true
   # end
 
-end
+rb
+%>
