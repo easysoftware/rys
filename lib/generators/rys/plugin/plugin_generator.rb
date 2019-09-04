@@ -27,14 +27,17 @@ module Rys
     end
 
     def lib
-      template "lib/%name%.rb"
-      template "lib/tasks/%name%.rake"
-      template "lib/%name%/version.rb"
-      template "lib/%name%/engine.rb"
+      template "lib/%namespaced_name%.rb"
+      template "lib/tasks/%namespaced_name%_tasks.rake"
+      template "lib/%namespaced_name%/version.rb"
+      template "lib/%namespaced_name%/engine.rb"
     end
 
     def gitignore
       template '.gitignore'
+    end
+
+    def gemfile_entry
     end
 
   end
@@ -92,6 +95,10 @@ module Rys
       @name_pluralize ||= name.pluralize
     end
 
+    def underscored_name_pluralize
+      @underscored_name_pluralize ||= underscored_name.pluralize
+    end
+
     def get_builder_class
       PluginBuilder
     end
@@ -119,7 +126,7 @@ module Rys
     end
 
     def create_view_example
-      template 'app/views/issues/%name%/_view_issues_show_details_bottom.html.erb'
+      template 'app/views/issues/%namespaced_name%/_view_issues_show_details_bottom.html.erb'
     end
 
     def append_to_gemfile
@@ -140,7 +147,12 @@ module Rys
         path = "'rys_plugins/#{app_path}'"
       end
 
-      entry = "\ngem '#{name}', path: #{path}, group: [:default, :rys]"
+      entry = <<-STR.strip_heredoc
+        if Dir.exists?(#{path})
+          gem '#{name}', path: #{path}, group: [:default, :rys]
+        end
+      STR
+
       append_file gemfile_local, entry
     end
 
@@ -170,10 +182,22 @@ module Rys
       end
     end
 
+    def dotted_name
+      @dotted_name ||= name.tr('-', '.')
+    end
+
     private
 
       def author
         options['rys_author'].presence || super
+      end
+
+      def modules_wrap(unwrapped_code)
+        modules.reverse.inject(unwrapped_code.strip_heredoc.strip) do |content, mod|
+          str = "module #{mod}\n"
+          str += content.lines.map { |line| "  #{line}" }.join
+          str += content.present? ? "\nend" : "end"
+        end
       end
 
   end

@@ -1,9 +1,9 @@
 en:
-  <%= name %>:
-    plugin_name: "<%= camelized %>"
+  <%= underscored_name %>:
+    plugin_name: "<%= humanized %>"
     plugin_description: ""
 
   rys_features:
-    <%= name %>:
-      title: "<%= name %>"
-      description: "<%= name %>"
+    <%= underscored_name %>:
+      title: "<%= humanized %>"
+      description: "<%= humanized %>"

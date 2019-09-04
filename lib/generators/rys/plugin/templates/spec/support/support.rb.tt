@@ -1,4 +1,7 @@
-# module <%= camelized %>::Test
-#   module Helper
-#   end
-# end
+<%= wrap_in_modules <<-rb.strip_heredoc
+  module Test
+    module Helper
+    end
+  end
+rb
+%>

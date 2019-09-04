@@ -1,14 +1,14 @@
 require 'rys'
 
-module <%= camelized %>
+<%= modules_wrap <<-rb
   class Engine < ::Rails::Engine
     include Rys::EngineExtensions
 
-    rys_id '<%= name %>'
+    rys_id '#{underscored_name}'
 
-    initializer '<%= name %>.setup' do
+    initializer '#{underscored_name}.setup' do
       # Custom initializer
     end
-
   end
-end
+rb
+%>
