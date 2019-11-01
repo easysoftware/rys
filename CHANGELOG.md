@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.4.10] - 2019-10-18
+### Added
+- apply_if_plugins to patcher
+
 ## [Unreleased]
 ### Added
 - private methods can be controller via feature in patches
