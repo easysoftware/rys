@@ -5,6 +5,9 @@ Rys::Patcher.add('<%= helper_name_camelize %>') do
   #
   # apply_if_plugins
 
+  # apply_if_ryses verifies whether the rys is installed
+  # Example: apply_if_ryses :dependent_rys, :another_rys
+
   # Apply if condition is met
   #
   apply_if do
