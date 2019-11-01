@@ -1,31 +1,47 @@
 # <%= camelized %>
 
+<!--
+  -- Replace for true repository location
+  --
+[![coverage report](https://git.easy.cz/platform-2.0/features/<%= name %>/badges/master/coverage.svg)](https://git.easy.cz/platform-2.0/features/<%= name %>/commits/master)
+  --
+-->
+
+## How to install
+
+Add to your Gemfile or gems.rb
+
+```ruby
+# From gems server
+source 'https://gems.easysoftware.com' do
+  gem '<%= name %>'
+end
+
+# From git server
+gem '<%= name %>', git: 'git@git.easy.cz:gems/<%= name %>', branch: 'master'
+```
+
 ## Development
 
-##### By path (default)
+Please follow our [Guidelines](https://git.easy.cz/external/guidelines/wikis/home)
 
-Into gem file
+For full feature list of RYS see [RYS wiki](https://github.com/easysoftware/rys/wiki)
 
-    gem '<%= name %>', path: PLUGIN_PATH
+### 1) From the platform gemfile
 
+1. Open gemfile (e.g: APP_ROOT/Gemfile.local)
+2. Add `gem '<%= name %>', path: GENERATED_RYS_LOCATION`
+3. Run `bundle install`
+4. Run the server and develop
 
-##### By git
+### 2) Link to redmine plugin
 
-Into gem file
+1. Make a symlink into `plugins/easysoftware/local`
+2. Run `bundle install`
+3. Run the server and develop
 
-    gem '<%= name %>', git: 'git@git.cz:plugins/<%= name %>.git'
+### 3) From generated rys itself
 
-Into shell
-
-    bundle config local.<%= name %> PLUGIN_PATH
-
-
-##### By redmine plugin
-
-Ensure you have redmine plugin for rys plugins
-
-    rails generate rys:redmine:plugin REDMINE_PLUGIN
-
-Move plugin
-
-    mv PLUGIN_PATH REDMINE_PLUGIN/local
+1. Symlink the platform (dummy app) into `test/dummy`
+2. Run `bundle install`
+3. Run the server and develop

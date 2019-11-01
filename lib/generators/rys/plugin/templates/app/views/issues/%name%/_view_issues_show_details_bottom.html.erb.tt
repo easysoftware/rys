@@ -1,8 +1,0 @@
-<%% Rys::Feature.on('<%= name %>.issue.show') do %>
-  <hr>
-  <div>
-    <strong>Test 1</strong> <%%= @<%= name %>_test_1 %><br>
-    <strong>Test 2</strong> <%%= @<%= name %>_test_2 %>
-  </div>
-  <hr>
-<%% end %>

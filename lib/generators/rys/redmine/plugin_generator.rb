@@ -27,6 +27,9 @@ module Rys
           empty_directory gems_target_dir
           empty_directory local_target_dir
 
+          directory 'lib', target_dir.join('lib')
+          directory 'easybundler', target_dir.join('easybundler')
+
           create_file gems_target_dir.join('.keep')
           create_file local_target_dir.join('.keep')
 
@@ -37,7 +40,6 @@ module Rys
           end
 
           template '.gitignore', target_dir.join('.gitignore')
-          template 'rys.rb', target_dir.join('rys.rb')
         end
 
         private

@@ -1,13 +1,14 @@
 Rys::Patcher.add('IssuesController') do
+  # apply_if_plugins :easy_extensions
 
   included do
-    before_action :<%= name %>_add_flash_notice, only: [:show]
+    before_action :<%= underscored_name %>_add_flash_notice, only: [:show]
   end
 
   instance_methods do
     def show
-      Rys::Feature.on('<%= name %>.issue.show') do
-        @<%= name %>_test_1 = 'Test 2'
+      Rys::Feature.on('<%= dotted_name %>.issue.show') do
+        @<%= underscored_name %>_test_1 = 'Test 2'
       end
 
       super
@@ -15,17 +16,16 @@ Rys::Patcher.add('IssuesController') do
 
     private
 
-      def <%= name %>_add_flash_notice
-        if Rys::Feature.active?('<%= name %>.issue.show', '<%= name %>.project.show')
+      def <%= underscored_name %>_add_flash_notice
+        if Rys::Feature.active?('<%= dotted_name %>.issue.show', '<%= dotted_name %>.project.show')
           flash.now[:notice] = 'Features are activated'
         end
       end
   end
 
-
-  instance_methods(feature: '<%= name %>.issue.show') do
+  instance_methods(feature: '<%= dotted_name %>.issue.show') do
     def show
-      @<%= name %>_test_2 = 'Test 2'
+      @<%= underscored_name %>_test_2 = 'Test 2'
 
       super
     end
@@ -33,5 +33,4 @@ Rys::Patcher.add('IssuesController') do
 
   class_methods do
   end
-
 end

@@ -47,8 +47,8 @@ module Rys
       require 'rys/access_control'
     end
 
-    initializer 'rys.features' do |app|
-      if defined?(ENGINE_PATH) && root.to_s == ENGINE_PATH
+    initializer 'rys.append_migrations' do |app|
+      if defined?(ENGINE_ROOT) && root.to_s == ENGINE_ROOT
         # Rails is loaded through this engine
         # and migrations are automatically added
       else
@@ -56,7 +56,9 @@ module Rys
           app.config.paths['db/migrate'] << expanded_path
         end
       end
+    end
 
+    initializer 'rys.features' do |app|
       app.middleware.use ::Rys::FeaturePreload
       RysFeatureRecord.migrate_new
     end

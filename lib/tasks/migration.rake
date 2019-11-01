@@ -8,7 +8,11 @@ namespace :rys do
         existent_dirs = plugin.paths['db/after_plugins'].existent
 
         puts "Migrating #{plugin} after_plugins ..."
-        ActiveRecord::Migrator.migrate(existent_dirs, version)
+        if Rys.utils.rails5?
+          ActiveRecord::MigrationContext.new(existent_dirs).migrate(version)
+        else
+          ActiveRecord::Migrator.migrate(existent_dirs, version)
+        end
       end
 
       Rake::Task["db:schema:dump"].reenable
@@ -48,12 +52,14 @@ namespace :redmine do
     #   - Rails tasks
     #
     task :migrate do
-      if defined?(APP_RAKEFILE) && (defined?(ENGINE_PATH) || defined?(ENGINE_ROOT))
-        prefix = 'app:'
-      end
+      if !ENV['NAME'].present?
+        if defined?(APP_RAKEFILE) && (defined?(ENGINE_PATH) || defined?(ENGINE_ROOT))
+          prefix = 'app:'
+        end
 
-      Rake::Task["#{prefix}redmine:plugins:migrate"].enhance do
-        Rake::Task["#{prefix}rys:migrate:after_plugins"].invoke
+        Rake::Task["#{prefix}redmine:plugins:migrate"].enhance do
+          Rake::Task["#{prefix}rys:migrate:after_plugins"].invoke
+        end
       end
     end
 

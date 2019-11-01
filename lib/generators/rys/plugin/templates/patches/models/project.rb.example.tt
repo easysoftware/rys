@@ -1,22 +1,22 @@
 Rys::Patcher.add('Project') do
+  apply_if_plugins :easy_extensions
 
   included do
     # has_many :things
 
-    after_commit :<%= name %>_ensure_something, if: -> { Rys::Feature.active?('<%= name %>.project') }
+    after_commit :<%= underscored_name %>_ensure_something, if: -> { Rys::Feature.active?('<%= dotted_name %>.project') }
   end
 
   instance_methods do
-
     private
 
-      def <%= name %>_ensure_something
+      def <%= underscored_name %>_ensure_something
         puts 'Features are activated'
       end
 
   end
 
-  instance_methods(feature: '<%= name %>.project') do
+  instance_methods(feature: '<%= dotted_name %>.project') do
     def to_s
       "I'am cool " + super
     end
@@ -24,5 +24,4 @@ Rys::Patcher.add('Project') do
 
   class_methods do
   end
-
 end
