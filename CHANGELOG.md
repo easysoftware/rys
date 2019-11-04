@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.4.10] - 2019-11-4
+### Added
+- apply_if_rysy to patcher
+
 ## [Unreleased]
 ### Added
 - private methods can be controller via feature in patches

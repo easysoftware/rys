@@ -27,6 +27,7 @@ module Rys
       patches.each do |patch|
         next if patch.where != where
         next if patch.apply_if_plugins.present? && !plugin_installed?(patch.apply_if_plugins)
+        next if patch.apply_if_rysy.present? && !rys_installed?(patch.apply_if_rysy)
 
         klass_to_patch = patch.klass.constantize
 
@@ -54,6 +55,10 @@ module Rys
 
     def self.plugin_installed?(plugins)
       plugins.all?{ |plugin| Redmine::Plugin.installed?(plugin) }
+    end
+
+    def self.rys_installed?(rysy)
+      rysy.all?{ |rys| Rys::PluginsManagement.find(rys) }
     end
 
     # TODO: What should happen if
@@ -107,6 +112,7 @@ module Rys
       @_where = nil
       @_apply_if = nil
       @_apply_if_plugins = []
+      @_apply_if_rysy = []
       @_apply_only_once = false
       @_includeds = []
       @_instance_methods = []
@@ -118,6 +124,7 @@ module Rys
         where: @_where,
         apply_if: @_apply_if,
         apply_if_plugins: @_apply_if_plugins,
+        apply_if_rysy: @_apply_if_rysy,
         apply_only_once: @_apply_only_once,
         includeds: @_includeds,
         instance_methods: @_instance_methods,
@@ -157,6 +164,10 @@ module Rys
 
     def apply_if_plugins(*values)
       @_apply_if_plugins = Array.wrap(values)
+    end
+
+    def apply_if_rysy(*values)
+      @_apply_if_rysy = Array.wrap(values)
     end
 
     def instance_methods(**options, &block)
@@ -206,6 +217,10 @@ module Rys
 
     def apply_if_plugins
       result[:apply_if_plugins]
+    end
+
+    def apply_if_rysy
+      result[:apply_if_rysy]
     end
 
     def apply_if
