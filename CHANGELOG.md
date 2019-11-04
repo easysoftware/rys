@@ -1,8 +1,8 @@
 # Changelog
 
-## [1.4.10] - 2019-10-18
+## [1.4.10] - 2019-11-4
 ### Added
-- apply_if_plugins to patcher
+- apply_if_rysy to patcher
 
 ## [Unreleased]
 ### Added
