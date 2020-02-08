@@ -124,6 +124,16 @@ module Rys
         @rys_id ||= ActiveSupport::Inflector.underscore(self.name).sub('/engine', '')
       end
 
+      # for deactivation
+      def plugin_active?
+        true
+      end
+
+      # html partial if the plugin is deactivated
+      # it is expected to be overridden by external plugins
+      def deactivated_plugin_html(_view_context)
+      end
+
     end
 
     module ParentClassMethods
