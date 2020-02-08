@@ -17,7 +17,7 @@ class RysFeatureRecord < ActiveRecord::Base
       end
     end
 
-    where(name: features.map(&:full_key))
+    features.any? ? where(name: features.map(&:full_key)) : none
   }
 
   after_commit :update_callback, on: :update
