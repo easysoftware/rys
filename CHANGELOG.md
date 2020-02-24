@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.4.12] - 2020-02-24
+### Added
+- check activatetion based on Easy Redmine plugins
 ## [1.4.10] - 2019-11-4
 ### Added
 - apply_if_rysy to patcher
