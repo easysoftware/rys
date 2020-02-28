@@ -134,6 +134,13 @@ module Rys
       def deactivated_plugin_html(_view_context)
       end
 
+      # true  -> enable deactivation
+      # false -> always enabled
+      def hosting_plugin(value = nil)
+        @hosting_plugin = !!value unless value == nil
+        @hosting_plugin
+      end
+
     end
 
     module ParentClassMethods
