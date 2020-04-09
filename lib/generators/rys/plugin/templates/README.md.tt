@@ -3,7 +3,7 @@
 <!--
   -- Replace for true repository location
   --
-[![coverage report](https://git.easy.cz/platform-2.0/features/<%= name %>/badges/master/coverage.svg)](https://git.easy.cz/platform-2.0/features/<%= name %>/commits/master)
+[![coverage report](https://git.easy.cz/rysy/features/<%= name %>/badges/master/coverage.svg)](https://git.easy.cz/rysy/features/<%= name %>/commits/master)
   --
 -->
 
@@ -18,7 +18,7 @@ source 'https://gems.easysoftware.com' do
 end
 
 # From git server
-gem '<%= name %>', git: 'git@git.easy.cz:gems/<%= name %>', branch: 'master'
+gem '<%= name %>', git: 'git@git.easy.cz:rysy/features/<%= name %>.git', branch: 'master'
 ```
 
 ## Development

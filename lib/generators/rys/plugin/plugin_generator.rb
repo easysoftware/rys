@@ -111,6 +111,7 @@ module Rys
       build(:gemfile)
       build(:rubocop)
       build(:changelog)
+      directory 'api'
       directory 'db'
       template '.gitlab-ci.yml'
       template '.rspec'
@@ -188,23 +189,23 @@ module Rys
 
     private
 
-      def author
-        options['rys_author'].presence || super
-      end
+    def author
+      options['rys_author'].presence || super
+    end
 
-      def modules_wrap(unwrapped_code, commented: false)
-        prefix = commented ? '# ' : ''
+    def modules_wrap(unwrapped_code, commented: false)
+      prefix = commented ? '# ' : ''
 
-        modules.reverse.inject(unwrapped_code.strip_heredoc.strip) do |content, mod|
-          str = "#{prefix}module #{mod}\n"
-          str += content.lines.map { |line| "#{prefix}  #{line}" }.join
-          str += content.present? ? "\n#{prefix}end" : "#{prefix}end"
-        end
+      modules.reverse.inject(unwrapped_code.strip_heredoc.strip) do |content, mod|
+        str = "#{prefix}module #{mod}\n"
+        str += content.lines.map { |line| "#{prefix}  #{line}" }.join
+        str += content.present? ? "\n#{prefix}end" : "#{prefix}end"
       end
+    end
 
-      def commented_modules_wrap(unwrapped_code)
-        modules_wrap(unwrapped_code, commented: true)
-      end
+    def commented_modules_wrap(unwrapped_code)
+      modules_wrap(unwrapped_code, commented: true)
+    end
 
   end
 end

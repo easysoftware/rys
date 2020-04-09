@@ -1,9 +1,10 @@
+---
 en:
   <%= underscored_name %>:
-    plugin_name: "<%= humanized %>"
+    plugin_name: <%= humanized %>
     plugin_description: ""
 
   rys_features:
     <%= underscored_name %>:
-      title: "<%= humanized %>"
-      description: "<%= humanized %>"
+      title: <%= humanized %>
+      description: <%= humanized %>

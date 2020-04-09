@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
 
   s.metadata['allowed_push_host'] = 'https://gems.easysoftware.com'
 
-  s.files = Dir['{app,config,db,lib,patches}/**/{*,.*}', 'Rakefile', 'README.md', 'CHANGELOG.md', 'gems.rb']
+  s.files = Dir['{api,app,config,db,lib,patches}/**/{*,.*}', 'Rakefile', 'README.md', 'CHANGELOG.md', 'gems.rb']
   s.test_files = Dir['spec/**/*', 'test/.keep']
 
   s.add_dependency 'rys'
