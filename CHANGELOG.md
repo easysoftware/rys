@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## [1.4.15] - 2020-04-09
+### Fixed
+- Missing api directory in plugin templates
 ## [1.4.14] - 2020-04-09
 ### Added
 - private methods can be controller via feature in patches
