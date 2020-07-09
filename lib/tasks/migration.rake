@@ -3,7 +3,7 @@ namespace :rys do
 
     desc 'Migrate ryses db/after_plugins'
     task :after_plugins => :environment do
-      Rys::PluginsManagement.all do |plugin|
+      Rys::PluginsManagement.all(systemic: true) do |plugin|
         version = ENV['VERSION'].presence
         existent_dirs = plugin.paths['db/after_plugins'].existent
 
