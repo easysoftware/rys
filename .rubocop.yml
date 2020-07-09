@@ -12,15 +12,15 @@ Layout/EmptyLinesAroundModuleBody:
   EnforcedStyle: empty_lines_except_namespace
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented_relative_to_receiver
+Layout/LineLength:
+  Enabled: false
 
-Lint/HandleExceptions:
+Lint/SuppressedException:
   AllowComments: true
 
 Metrics/AbcSize:
   Enabled: false
 Metrics/BlockLength:
-  Enabled: false
-Metrics/LineLength:
   Enabled: false
 Metrics/MethodLength:
   Enabled: false
@@ -28,8 +28,6 @@ Metrics/MethodLength:
 Rails/ApplicationRecord:
   Enabled: false
 
-Style/BracesAroundHashParameters:
-  EnforcedStyle: context_dependent
 Style/Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:
