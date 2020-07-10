@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+## [1.4.17] - 2020-07-10
+- update .rubocop.yml
 ## [1.4.16] - 2020-07-09
 ### Fixed
 - allow migration for systemic RYSy
