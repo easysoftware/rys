@@ -1,3 +1,3 @@
 module Rys
-  VERSION = '1.4.16'
+  VERSION = '2.0.0'
 end
