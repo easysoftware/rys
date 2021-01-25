@@ -3,8 +3,8 @@ module Rys
 
     def self.included(base)
       base.extend(ClassMethods)
-      base.parent.include(ActiveSupport::Configurable)
-      base.parent.extend(ParentClassMethods)
+      base.module_parent.include(ActiveSupport::Configurable)
+      base.module_parent.extend(ParentClassMethods)
 
       Rys::PluginsManagement.add(base)
 
