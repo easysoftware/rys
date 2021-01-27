@@ -1,6 +1,12 @@
 # Changelog
 
 ## [Unreleased]
+## [2.0.0] - 2021-01-27
+### Added
+- Rails 6.1 compatibility
+### Removed
+- support for Rails 5 or lower
+
 ## [1.4.16] - 2020-07-09
 ### Fixed
 - allow migration for systemic RYSy
