@@ -8,6 +8,7 @@ namespace :rys do
         existent_dirs = plugin.paths['db/after_plugins'].existent
 
         puts "Migrating #{plugin} after_plugins ..."
+        ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations.configs_for(name: 'primary')) unless ActiveRecord::Base.connection_db_config.name == 'primary'
         ActiveRecord::MigrationContext.new(existent_dirs, ::ActiveRecord::Base.connection.schema_migration).migrate(version)
       end
 
