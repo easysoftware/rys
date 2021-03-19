@@ -1,6 +1,11 @@
 # Changelog
 
 ## [Unreleased]
+
+## [2.0.1] - 2021-03-18
+### Added
+- Add supporting multiple db connections
+
 ## [2.0.0] - 2021-01-27
 ### Added
 - Rails 6.1 compatibility
