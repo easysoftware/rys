@@ -6,7 +6,6 @@ module Rys
   autoload :PatchGeneratorBase, 'rys/patch_generator_base'
   autoload :Reloader,           'rys/reloader'
   autoload :Hook,               'rys/hook'
-  autoload :Utils,              'rys/utils'
 
   def self.utils
     Utils
