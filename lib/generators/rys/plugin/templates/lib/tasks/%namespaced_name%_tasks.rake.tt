@@ -1,5 +1,6 @@
 begin
   require 'rspec/core/rake_task'
+  require 'ryspec/engine'
 
   namespace :<%= underscored_name %> do
     desc 'Runs rspec tests'
@@ -8,7 +9,7 @@ begin
       args << '--require' << Ryspec::Engine.root.join('spec/spec_helper')
 
       task.rspec_opts = args
-      task.pattern = <%= camelized %>::Engine.root.join('spec/**/*_spec.rb')
+      task.pattern = <%= camelized %>::Engine.root.join(ENV['PATTERN'] || 'spec/**/*_spec.rb')
     end
   end
 rescue StandardError, LoadError

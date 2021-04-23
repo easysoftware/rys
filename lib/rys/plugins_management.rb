@@ -20,7 +20,7 @@ module Rys
       plugins = all_plugins.dup
 
       if !systemic
-        plugins.select! {|p| !p.parent.config.systemic }
+        plugins.reject! {|p| systemic_plugin?(p) }
       end
 
       if delegate_with
@@ -43,6 +43,12 @@ module Rys
       when ::Rails::Engine
         all_plugins.find{|p| p == plugin }
       end
+    end
+
+    private
+
+    def self.systemic_plugin?(p)
+      p.module_parent.config.systemic
     end
 
   end
