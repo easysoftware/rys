@@ -1,2 +1,2 @@
 inherit_gem:
-  rys: .rubocop.yml
+  easy_style: default.yml

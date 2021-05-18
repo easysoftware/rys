@@ -19,4 +19,5 @@ Gem::Specification.new do |s|
   s.test_files = Dir['spec/**/*', 'test/.keep']
 
   s.add_dependency 'rys'
+  s.add_development_dependency 'easy_style', '~> 0.1'
 end

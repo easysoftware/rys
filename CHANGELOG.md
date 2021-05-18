@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+- Use easy_style gem
 
 ## [2.0.1] - 2021-03-18
 ### Added
