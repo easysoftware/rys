@@ -21,5 +21,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'tty-prompt'
   s.add_dependency 'redmine_extensions'
   s.add_dependency 'rails', '>= 6.0'
-  s.add_development_dependency 'easy_style'
+  s.add_development_dependency 'easy_style', '~> 0.1'
 end
