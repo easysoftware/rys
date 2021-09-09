@@ -16,6 +16,20 @@ namespace :rys do
       Rake::Task["db:schema:dump"].invoke
     end
 
+    task :plugins => :environment do
+      Rys::PluginsManagement.all(systemic: true) do |plugin|
+        version = ENV['VERSION'].presence
+        existent_dirs = plugin.paths['db/migrate'].existent
+
+        puts "Migrating #{plugin} ..."
+        ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations.configs_for(name: 'primary')) unless ActiveRecord::Base.connection_db_config.name == 'primary'
+        ActiveRecord::MigrationContext.new(existent_dirs, ::ActiveRecord::Base.connection.schema_migration).migrate(version)
+      end
+
+      Rake::Task["db:schema:dump"].reenable
+      Rake::Task["db:schema:dump"].invoke
+    end
+
   end
 end
 
