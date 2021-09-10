@@ -1,7 +1,7 @@
 $:.push File.expand_path('../lib', __dir__)
 ENV['RAILS_ENV'] ||= 'test'
 
-require File.join(__dir__, 'dummy/config/environment')
+require File.join(__dir__, '../test/dummy/config/environment')
 require 'rspec/rails'
 
 RSpec.configure do |config|

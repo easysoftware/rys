@@ -1,27 +1,20 @@
+require "rys/migrate"
+
 namespace :rys do
   namespace :migrate do
-
     desc 'Migrate ryses db/after_plugins'
-    task :after_plugins => :environment do
-      Rys::PluginsManagement.all(systemic: true) do |plugin|
-        version = ENV['VERSION'].presence
-        existent_dirs = plugin.paths['db/after_plugins'].existent
-
-        puts "Migrating #{plugin} after_plugins ..."
-        ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations.configs_for(name: 'primary')) unless ActiveRecord::Base.connection_db_config.name == 'primary'
-        ActiveRecord::MigrationContext.new(existent_dirs, ::ActiveRecord::Base.connection.schema_migration).migrate(version)
-      end
-
-      Rake::Task["db:schema:dump"].reenable
-      Rake::Task["db:schema:dump"].invoke
+    task after_plugins: :environment do
+      Rys::Migrate.data
     end
 
+    task plugins: :environment do
+      Rys::Migrate.db
+    end
   end
 end
 
 namespace :redmine do
   namespace :plugins do
-
     # == Problem:
     # Imagine situation when you have an empty database and
     # migration which adds new EasyPage.
@@ -48,8 +41,8 @@ namespace :redmine do
     #   - App's tasks (lib/tasks)
     #   - Rails tasks
     #
-    task :migrate do
-      if !ENV['NAME'].present?
+    task migrate: :environment do
+      if ENV['NAME'].blank?
         if defined?(APP_RAKEFILE) && (defined?(ENGINE_PATH) || defined?(ENGINE_ROOT))
           prefix = 'app:'
         end
@@ -59,6 +52,5 @@ namespace :redmine do
         end
       end
     end
-
   end
 end
