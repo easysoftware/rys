@@ -3,6 +3,7 @@
 ## [Unreleased]
 ### Added
 - Use easy_style gem
+- Ensure migrations (db & data) for all RYSy (= provide DSL)
 
 ## [2.0.1] - 2021-03-18
 ### Added
