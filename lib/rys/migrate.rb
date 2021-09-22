@@ -11,6 +11,8 @@ module Rys
       # data:migrate - this execute data load after all plugins are migrated / loaded
       def data
         call("after_plugins")
+        Rake::Task["db:schema:dump"].reenable
+        Rake::Task["db:schema:dump"].invoke
       end
 
       private
@@ -27,9 +29,6 @@ module Rys
           end
           ActiveRecord::MigrationContext.new(existent_dirs, ::ActiveRecord::Base.connection.schema_migration).migrate(version)
         end
-
-        Rake::Task["db:schema:dump"].reenable
-        Rake::Task["db:schema:dump"].invoke
       end
 
     end

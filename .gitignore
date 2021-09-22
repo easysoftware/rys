@@ -3,5 +3,7 @@
 /spec/dummy
 /test/dummy
 /redmine.tar.gz
+/coverage
+/log
 Gemfile.lock
 gems.locked

@@ -16,6 +16,7 @@ module Rys
 
     # @param delegate_with [Delegator] Wrap plugin with this delegator
     # @param systemic [true, false] Returns also systemic ryses
+    # @return [Array<Rails::Engine>]
     def self.all(delegate_with: nil, systemic: false)
       plugins = all_plugins.dup
 

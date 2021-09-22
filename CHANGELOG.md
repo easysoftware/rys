@@ -1,6 +1,11 @@
 # Changelog
 
 ## [Unreleased]
+## [2.0.3] - 2021-09-22
+### Fixed
+- multi-tenant migrations
+
+## [2.0.2] - 2021-09-10
 ### Added
 - Use easy_style gem
 - Ensure migrations (db & data) for all RYSy (= provide DSL)
