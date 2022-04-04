@@ -4,6 +4,29 @@ require 'rails/generators/rails/plugin/plugin_generator'
 module Rys
   class PluginBuilder < ::Rails::PluginBuilder
 
+    def app
+      if mountable?
+        if api?
+          directory "app", exclude_pattern: %r{app/(views|helpers)}
+        else
+          directory "app"
+        end
+
+        remove_dir "app/mailers" if options[:skip_action_mailer]
+        remove_dir "app/jobs" if options[:skip_active_job]
+      elsif full?
+        empty_directory_with_keep_file "app/models"
+        empty_directory_with_keep_file "app/controllers"
+        empty_directory_with_keep_file "app/mailers" unless options[:skip_action_mailer]
+        empty_directory_with_keep_file "app/jobs" unless options[:skip_active_job]
+
+        unless api?
+          empty_directory_with_keep_file "app/helpers"
+          empty_directory_with_keep_file "app/views"
+        end
+      end
+    end
+
     def rubocop
       template '.rubocop.yml'
     end
@@ -38,6 +61,10 @@ module Rys
     end
 
     def gemfile_entry
+    end
+
+    def test_dummy_assets
+      # ignore assets
     end
 
   end
@@ -135,9 +162,7 @@ module Rys
 
       gemfile_local = Rails.root.join('Gemfile.local')
 
-      if !gemfile_local.exist?
-        create_file gemfile_local
-      end
+      create_file gemfile_local unless gemfile_local.exist?
 
       case @destination_root_by
       when :path

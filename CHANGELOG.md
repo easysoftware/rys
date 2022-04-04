@@ -1,6 +1,11 @@
 # Changelog
 
 ## [Unreleased]
+
+## [2.0.4] - 2022-04-04
+### Removed
+- "assets" folder from rys generator
+
 ## [2.0.3] - 2021-09-22
 ### Fixed
 - multi-tenant migrations
