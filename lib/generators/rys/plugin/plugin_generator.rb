@@ -127,7 +127,7 @@ module Rys
     end
 
     def get_builder_class
-      PluginBuilder
+      ::Rys::PluginBuilder
     end
 
     def create_root_files
@@ -142,6 +142,14 @@ module Rys
       directory 'db'
       template '.gitlab-ci.yml'
       template '.rspec'
+    end
+
+    def create_assets_manifest_file
+      # Skip
+    end
+
+    def create_public_stylesheets_files
+      # Skip
     end
 
     def create_patches
