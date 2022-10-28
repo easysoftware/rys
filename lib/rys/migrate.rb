@@ -19,8 +19,10 @@ module Rys
 
       # @param [String] source - +migrate+ or +after_plugins+
       def call(source)
+        names = ENV['NAME'].to_s.split(",").map(&:strip)
         PluginsManagement.all(systemic: true) do |plugin|
-          version = ENV['VERSION'].presence
+          version = ENV['VERSION'].to_i if ENV['VERSION'].present?
+          next unless names.include?(plugin.rys_id) if ENV['NAME'].present?
           existent_dirs = plugin.paths["db/#{source}"].existent
 
           puts "Migrating #{plugin} #{source} ..."
