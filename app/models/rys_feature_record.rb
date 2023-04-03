@@ -33,6 +33,7 @@ class RysFeatureRecord < ActiveRecord::Base
       create!(name: name, active: feature.default_db_status)
     end
   rescue ActiveRecord::NoDatabaseError
+    # nothing
   end
 
   def self.request_store
@@ -45,7 +46,7 @@ class RysFeatureRecord < ActiveRecord::Base
 
   def self.active?(full_key)
     record = (request_store[full_key] ||= find_by(name: full_key))
-    record && record.active?
+    record&.active?
   end
 
   def self.activate!(*full_keys)

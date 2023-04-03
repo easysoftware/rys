@@ -21,26 +21,6 @@ module Rys
       require 'rys/rails_generator'
     end
 
-    # All plugins must be loaded now!!!
-    config.before_initialize do |app|
-      dirs = {}
-      Rys::Patcher.paths.each do |path|
-        dirs[path.to_s] = ['rb']
-      end
-
-      patches_reloader = ActiveSupport::FileUpdateChecker.new([], dirs) do
-        Rys::Patcher.reload_patches
-      end
-      patches_reloader.execute
-      app.reloaders << patches_reloader
-
-      config.to_prepare do
-        patches_reloader.execute_if_updated
-        Rys::Patcher.apply
-        Rys::Patcher.applied_count += 1
-      end
-    end
-
     # Access control should be patch before any initializers/*
     # because that is the place where all permissions are defined
     initializer 'rys.access_control', before: :load_config_initializers do
@@ -59,14 +39,17 @@ module Rys
     end
 
     initializer 'rys.features' do |app|
-      app.middleware.use ::Rys::FeaturePreload
+      app.middleware.use ::Rys::Middleware::FeaturePreload
+    end
+
+    config.after_initialize do |app|
       RysFeatureRecord.migrate_new
     end
 
     # For patches where you set
     #   where :earlier_to_prepare
     #
-    # Useful when you nedd something before loading easy plugins
+    # Useful when you need something before loading easy plugins
     Rys::Reloader.to_prepare do
       Rys::Patcher.apply(where: :earlier_to_prepare)
     end

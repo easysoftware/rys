@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+- Zeitwerk compatibility
 
 ## [2.0.4] - 2022-04-04
 ### Removed

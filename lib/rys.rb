@@ -8,6 +8,24 @@ module Rys
   autoload :Reloader, 'rys/reloader'
   autoload :Hook, 'rys/hook'
 
+  def self.init_patches!
+    dirs = {}
+    Rys::Patcher.paths.each do |path|
+      dirs[path.to_s] = ['rb']
+    end
+
+    patches_reloader = ActiveSupport::FileUpdateChecker.new([], dirs) do
+      Rys::Patcher.reload_patches
+    end
+    patches_reloader.execute
+    Rails.application.reloaders << patches_reloader
+
+    Rails.application.config.to_prepare do
+      patches_reloader.execute_if_updated
+      Rys::Patcher.apply
+      Rys::Patcher.applied_count += 1
+    end
+  end
   def self.utils
     Utils
   end
@@ -16,3 +34,4 @@ end
 
 require 'rys/engine'
 require 'rys/featured_routes'
+require 'rys/middleware/feature_preload'

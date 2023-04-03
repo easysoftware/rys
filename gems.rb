@@ -13,10 +13,10 @@ possible_app_dirs = [
 gems_rb_found = false
 possible_app_dirs.each do |dir|
   break if gems_rb_found
-  next if !dir
-  next if !Dir.exist?(dir)
+  next unless dir
+  next unless Dir.exist?(dir)
 
-  ['Gemfile', 'gems.rb'].each do |gems_rb|
+  %w[Gemfile gems.rb].each do |gems_rb|
     gems_rb = File.expand_path(File.join(dir, gems_rb))
 
     if File.exist?(gems_rb)
@@ -27,9 +27,7 @@ possible_app_dirs.each do |dir|
   end
 end
 
-if !gems_rb_found
-  abort("Dummy application's gemfile not found")
-end
+abort("Dummy application's gemfile not found") if !gems_rb_found
 
 # Current gem specification file
 gemspec_file = Dir.glob(File.join(__dir__, '*.gemspec')).first
