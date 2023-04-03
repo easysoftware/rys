@@ -3,6 +3,8 @@
 ## [Unreleased]
 ### Added
 - Zeitwerk compatibility
+### Removed
+- deprecations
 
 ## [2.0.4] - 2022-04-04
 ### Removed
