@@ -25,5 +25,5 @@ To configure Rys, you need to create a file named `31-rysy.rb` in the `config/in
 In this file, you can apply patches and configure Rys as follows:
 ```ruby
 # config/initializers/31-rysy.rb
-Rys.init_patches!
+Rys.apply_patches!
 ```

@@ -8,7 +8,7 @@ module Rys
   autoload :Reloader, 'rys/reloader'
   autoload :Hook, 'rys/hook'
 
-  def self.init_patches!
+  def self.apply_patches!
     dirs = {}
     Rys::Patcher.paths.each do |path|
       dirs[path.to_s] = ['rb']

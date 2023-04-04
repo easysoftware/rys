@@ -25,6 +25,18 @@ module Rys
         end
       end
 
+      # Only for `EasyEngine` concept in core of Easy Redmine
+      ActiveSupport.on_load(:before_apply_easy_patches) do
+
+        easy_patch_dir = base.root.join("easy_patch")
+        return unless easy_patch_dir.exist?
+
+        Dir.glob(easy_patch_dir.join('**/*.rb')).each do |patch_file|
+          ActiveSupport::Deprecation.warn "DEPRECATION: (legacy) Easy Patch in RYS detect! (#{patch_file})"
+          require patch_file
+        end
+      end
+
       # To load after Redmine
       base.config.before_configuration do |app|
         app.config.railties_order.unshift(base)
@@ -39,36 +51,36 @@ module Rys
 
     def initializers
       @changed_initializers ||= begin
-        original_initializers = super
-        new_initializers = []
+                                  original_initializers = super
+                                  new_initializers = []
 
-        initializers_moves.each do |moves|
-          initializer = original_initializers.find{|i| i.name == moves[:name] }
-          next if initializer.nil?
+                                  initializers_moves.each do |moves|
+                                    initializer = original_initializers.find { |i| i.name == moves[:name] }
+                                    next if initializer.nil?
 
-          new_initializer = initializer.dup
-          new_initializer.instance_eval {
-            @name = "moved.#{name}"
-            @options = @options.dup
+                                    new_initializer = initializer.dup
+                                    new_initializer.instance_eval {
+                                      @name = "moved.#{name}"
+                                      @options = @options.dup
 
-            if moves[:before]
-              @options[:before] = moves[:before]
-            end
+                                      if moves[:before]
+                                        @options[:before] = moves[:before]
+                                      end
 
-            if moves[:after]
-              @options[:after] = moves[:after]
-            end
-          }
-          new_initializers << new_initializer
+                                      if moves[:after]
+                                        @options[:after] = moves[:after]
+                                      end
+                                    }
+                                    new_initializers << new_initializer
 
-          # Initializer must remain
-          initializer.instance_eval {
-            @block = proc {}
-          }
-        end
+                                    # Initializer must remain
+                                    initializer.instance_eval {
+                                      @block = proc {}
+                                    }
+                                  end
 
-        original_initializers + new_initializers
-      end
+                                  original_initializers + new_initializers
+                                end
     end
 
     module ClassMethods
@@ -119,7 +131,7 @@ module Rys
 
       # Be careful for changing the name
       # For example language prefix depends on this
-      def rys_id(name=nil)
+      def rys_id(name = nil)
         @rys_id = name.to_s if name
         @rys_id ||= ActiveSupport::Inflector.underscore(self.name).sub('/engine', '')
       end
@@ -131,8 +143,7 @@ module Rys
 
       # html partial if the plugin is deactivated
       # it is expected to be overridden by external plugins
-      def deactivated_plugin_html(_view_context)
-      end
+      def deactivated_plugin_html(_view_context) end
 
       # true  -> enable deactivation
       # false -> always enabled
