@@ -27,13 +27,12 @@ module Rys
 
       # Only for `EasyEngine` concept in core of Easy Redmine
       ActiveSupport.on_load(:before_apply_easy_patches) do
-
         easy_patch_dir = base.root.join("easy_patch")
-        return unless easy_patch_dir.exist?
-
-        Dir.glob(easy_patch_dir.join('**/*.rb')).each do |patch_file|
-          ActiveSupport::Deprecation.warn "DEPRECATION: (legacy) Easy Patch in RYS detect! (#{patch_file})"
-          require patch_file
+        if easy_patch_dir.exist?
+          Dir.glob(easy_patch_dir.join('**/*.rb')).each do |patch_file|
+            ActiveSupport::Deprecation.warn "DEPRECATION: (legacy) Easy Patch in RYS detect! (#{patch_file})"
+            require patch_file
+          end
         end
       end
 
