@@ -41,16 +41,16 @@ namespace :redmine do
     #   - App's tasks (lib/tasks)
     #   - Rails tasks
     #
-    task migrate: :environment do
-      if ENV['NAME'].blank?
-        if defined?(APP_RAKEFILE) && (defined?(ENGINE_PATH) || defined?(ENGINE_ROOT))
-          prefix = 'app:'
-        end
-
-        Rake::Task["#{prefix}redmine:plugins:migrate"].enhance do
-          Rake::Task["#{prefix}rys:migrate:after_plugins"].invoke
-        end
-      end
-    end
+    # task migrate: :environment do
+    #   if ENV['NAME'].blank?
+    #     if defined?(APP_RAKEFILE) && (defined?(ENGINE_PATH) || defined?(ENGINE_ROOT))
+    #       prefix = 'app:'
+    #     end
+    #
+    #     Rake::Task["#{prefix}redmine:plugins:migrate"].enhance do
+    #       Rake::Task["#{prefix}rys:migrate:after_plugins"].invoke
+    #     end
+    #   end
+    # end
   end
 end
