@@ -151,6 +151,14 @@ module Rys
         @hosting_plugin
       end
 
+      def disable_ryspec!
+        @ryspec_disabled = true
+      end
+
+      def ryspec_disabled?
+        @ryspec_disabled
+      end
+
     end
 
     module ParentClassMethods
