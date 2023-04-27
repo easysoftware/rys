@@ -10,6 +10,11 @@ module Rys
 
       # data:migrate - this execute data load after all plugins are migrated / loaded
       def data
+        call("data")
+      end
+
+      # after_plugins:migrate - this migrate scheme after all easy plugins/engines are migrated
+      def after_plugins
         call("after_plugins")
         Rake::Task["db:schema:dump"].reenable
         Rake::Task["db:schema:dump"].invoke
