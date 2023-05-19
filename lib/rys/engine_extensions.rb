@@ -14,17 +14,6 @@ module Rys
       base.class_attribute :initializers_moves
       base.initializers_moves = []
 
-      # base.initializer :append_migrations do |app|
-      #   if defined?(ENGINE_ROOT) && base.root.to_s == ENGINE_ROOT
-      #     # Rails is loaded through this engine
-      #     # and migrations are automatically added
-      #   else
-      #     config.paths['db/migrate'].expanded.each do |expanded_path|
-      #       app.config.paths['db/migrate'] << expanded_path
-      #     end
-      #   end
-      # end
-
       # Only for `EasyEngine` concept in core of Easy Redmine
       ActiveSupport.on_load(:before_apply_easy_patches) do
         easy_patch_dir = base.root.join("easy_patch")
@@ -122,11 +111,11 @@ module Rys
       #    different name.
       #
       # Be very careful with using this method. Results could be unpredictable.
-      # Also you must use the same name as orignal. String is different than Symbol.
+      # Also you must use the same name as original. String is different than Symbol.
       #
       #   move_initializer(:add_view_paths, after: :load_config_initializers)
       #
-      # More informations: http://guides.rubyonrails.org/configuring.html#initialization-events
+      # More information's: http://guides.rubyonrails.org/configuring.html#initialization-events
       #
       def move_initializer(name, before: nil, after: nil)
         initializers_moves << { name: name, before: before, after: after }
