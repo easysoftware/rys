@@ -11,6 +11,11 @@ module Rys
       patches_dir = base.root.join('patches')
       Rys::Patcher.paths << patches_dir if patches_dir.directory?
 
+      if (easy_api_dir = base.config.root.join("easy_api").directory?)
+        base.config.autoload_paths << easy_api_dir.to_s
+        base.config.eager_load_paths << easy_api_dir.to_s
+      end
+
       base.class_attribute :initializers_moves
       base.initializers_moves = []
 
