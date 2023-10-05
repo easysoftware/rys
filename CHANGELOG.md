@@ -1,6 +1,10 @@
 # Changelog
 
 ## [Unreleased]
+### Fixed
+- uninstallation
+### Added
+- Zeitwerk compatibility
 ### Removed
 - deprecations
 

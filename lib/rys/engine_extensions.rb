@@ -14,13 +14,17 @@ module Rys
       base.class_attribute :initializers_moves
       base.initializers_moves = []
 
-      base.initializer :append_migrations do |app|
-        if defined?(ENGINE_ROOT) && base.root.to_s == ENGINE_ROOT
-          # Rails is loaded through this engine
-          # and migrations are automatically added
-        else
-          config.paths['db/migrate'].expanded.each do |expanded_path|
-            app.config.paths['db/migrate'] << expanded_path
+      # Only for `EasyEngine` concept in core of Easy Redmine
+      ActiveSupport.on_load(:before_apply_easy_patches) do
+        easy_patch_dir = base.root.join("easy_patch")
+        if easy_patch_dir.exist?
+          Dir.glob(easy_patch_dir.join('**/*.rb')).each do |patch_file|
+            EasyDeprecation.warn(
+              deprecated: "Easy Patch (#{patch_file}) in RYS",
+              new_solution: "Rys::Patcher",
+              documentation_link: "https://developers.easysoftware.com/docs/developer-portal-devs/ZG9jOjM5NzgxNzQz-patch-management"
+            )
+            require patch_file
           end
         end
       end
@@ -39,36 +43,36 @@ module Rys
 
     def initializers
       @changed_initializers ||= begin
-        original_initializers = super
-        new_initializers = []
+                                  original_initializers = super
+                                  new_initializers = []
 
-        initializers_moves.each do |moves|
-          initializer = original_initializers.find{|i| i.name == moves[:name] }
-          next if initializer.nil?
+                                  initializers_moves.each do |moves|
+                                    initializer = original_initializers.find { |i| i.name == moves[:name] }
+                                    next if initializer.nil?
 
-          new_initializer = initializer.dup
-          new_initializer.instance_eval {
-            @name = "moved.#{name}"
-            @options = @options.dup
+                                    new_initializer = initializer.dup
+                                    new_initializer.instance_eval {
+                                      @name = "moved.#{name}"
+                                      @options = @options.dup
 
-            if moves[:before]
-              @options[:before] = moves[:before]
-            end
+                                      if moves[:before]
+                                        @options[:before] = moves[:before]
+                                      end
 
-            if moves[:after]
-              @options[:after] = moves[:after]
-            end
-          }
-          new_initializers << new_initializer
+                                      if moves[:after]
+                                        @options[:after] = moves[:after]
+                                      end
+                                    }
+                                    new_initializers << new_initializer
 
-          # Initializer must remain
-          initializer.instance_eval {
-            @block = proc {}
-          }
-        end
+                                    # Initializer must remain
+                                    initializer.instance_eval {
+                                      @block = proc {}
+                                    }
+                                  end
 
-        original_initializers + new_initializers
-      end
+                                  original_initializers + new_initializers
+                                end
     end
 
     module ClassMethods
@@ -107,11 +111,11 @@ module Rys
       #    different name.
       #
       # Be very careful with using this method. Results could be unpredictable.
-      # Also you must use the same name as orignal. String is different than Symbol.
+      # Also you must use the same name as original. String is different than Symbol.
       #
       #   move_initializer(:add_view_paths, after: :load_config_initializers)
       #
-      # More informations: http://guides.rubyonrails.org/configuring.html#initialization-events
+      # More information's: http://guides.rubyonrails.org/configuring.html#initialization-events
       #
       def move_initializer(name, before: nil, after: nil)
         initializers_moves << { name: name, before: before, after: after }
@@ -119,7 +123,7 @@ module Rys
 
       # Be careful for changing the name
       # For example language prefix depends on this
-      def rys_id(name=nil)
+      def rys_id(name = nil)
         @rys_id = name.to_s if name
         @rys_id ||= ActiveSupport::Inflector.underscore(self.name).sub('/engine', '')
       end
@@ -131,14 +135,21 @@ module Rys
 
       # html partial if the plugin is deactivated
       # it is expected to be overridden by external plugins
-      def deactivated_plugin_html(_view_context)
-      end
+      def deactivated_plugin_html(_view_context) end
 
       # true  -> enable deactivation
       # false -> always enabled
       def hosting_plugin(value = nil)
         @hosting_plugin = !!value unless value == nil
         @hosting_plugin
+      end
+
+      def disable_ryspec!
+        @ryspec_disabled = true
+      end
+
+      def ryspec_disabled?
+        @ryspec_disabled
       end
 
     end

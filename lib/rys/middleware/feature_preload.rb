@@ -2,28 +2,29 @@ require 'thread'
 
 module Rys
   ##
-  # Rys::FeaturePreload
+  # Rys::Middleware::FeaturePreload
   #
   # Save features used in specific action (e.g. '/issues')
   # to preload them at once on the same action in the future.
-  #
-  class FeaturePreload
 
-    def initialize(app)
-      @app = app
-      @mutex = Mutex.new
-      @features_for_paths = {}
-    end
+  module Middleware
+    class FeaturePreload
 
-    def call(env)
-      load_features(env)
-      response = @app.call(env)
-      save_features(env)
+      def initialize(app)
+        @app = app
+        @mutex = Mutex.new
+        @features_for_paths = {}
+      end
 
-      response
-    end
+      def call(env)
+        load_features(env)
+        response = @app.call(env)
+        save_features(env)
 
-    private
+        response
+      end
+
+      private
 
       def load_features(env)
         path = env['PATH_INFO'].to_s
@@ -50,5 +51,6 @@ module Rys
         }
       end
 
+    end
   end
 end
