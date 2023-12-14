@@ -1,6 +1,12 @@
 # Changelog
 
 ## [Unreleased]
+
+## [3.0.1] - 2023-12-14
+### Changed
+- easy_patches are no longer deprecated - in core of ER we will use them because of order
+
+## [3.0.0] - 2023-10-06
 ### Fixed
 - uninstallation
 ### Added
