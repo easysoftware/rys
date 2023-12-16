@@ -19,11 +19,6 @@ module Rys
         easy_patch_dir = base.root.join("easy_patch")
         if easy_patch_dir.exist?
           Dir.glob(easy_patch_dir.join('**/*.rb')).each do |patch_file|
-            EasyDeprecation.warn(
-              deprecated: "Easy Patch (#{patch_file}) in RYS",
-              new_solution: "Rys::Patcher",
-              documentation_link: "https://developers.easysoftware.com/docs/developer-portal-devs/ZG9jOjM5NzgxNzQz-patch-management"
-            )
             require patch_file
           end
         end
