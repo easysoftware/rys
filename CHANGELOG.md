@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Fixed
+- Fix deprecation warnings EasyApplication.installation? | [@jiri.vojta](https://git.easy.cz/jiri.vojta)
+
 ## [3.0.1] - 2023-12-14
 ### Changed
 - easy_patches are no longer deprecated - in core of ER we will use them because of order
