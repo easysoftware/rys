@@ -103,7 +103,7 @@ module Rys
 
     def active?
       # At the installation stage, we cannot check features, since there are no tables yet.
-      return false if Redmine::Plugin.installation?
+      return false if EasyApplication.installation?
 
       if block_condition
         block_condition.call && parent.active?
